@@ -730,11 +730,78 @@
   color: #475569;
   font-size: 0.95rem;
 }
-    /* 10. MOBILE RESPONSIVE ADAPTATION */
+/* 10. PROGRESS TRACKING */
+
+.progress-section {
+  max-width: 1000px;
+  margin: 2rem auto;
+  background-color: #ffffff;
+  padding: 2.5rem;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.progress-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.progress-card {
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 1.5rem;
+}
+
+.progress-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 0.8rem;
+}
+
+.progress-status {
+  display: inline-block;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #0284c7;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+
+.progress-card h3 {
+  color: #0f172a;
+}
+
+.progress-card p {
+  color: #475569;
+  font-size: 0.95rem;
+}
+
+.progress-action {
+  padding: 0.6rem 1rem;
+  background-color: #0f172a;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.progress-action:hover {
+  background-color: #1e293b;
+}
+    /* 11. MOBILE RESPONSIVE ADAPTATION */
     @media (max-width: 768px) {
       .mobile-toggle {
         display: block;
       }
+      .progress-header {
+  flex-direction: column;
+}
       .impact-grid {
   grid-template-columns: 1fr;
 }
@@ -1382,6 +1449,79 @@
   </div>
 
 </div>
+<div class="progress-section" id="progressTracking">
+
+  <div class="section-heading">
+    <h2>Progress Tracking</h2>
+    <p>
+      Monitor the current stage of your projects and keep track of important project activities.
+    </p>
+  </div>
+
+  <div class="progress-list">
+
+    <div class="progress-card">
+
+      <div class="progress-header">
+        <div>
+          <span class="progress-status">In Progress</span>
+          <h3>Waste Management in Urban Areas</h3>
+        </div>
+
+        <button class="progress-action">
+          View Progress
+        </button>
+      </div>
+
+      <p>
+        Track research, solution development, testing, and project activities.
+      </p>
+
+    </div>
+
+
+    <div class="progress-card">
+
+      <div class="progress-header">
+        <div>
+          <span class="progress-status">Planning</span>
+          <h3>Improving Digital Education</h3>
+        </div>
+
+        <button class="progress-action">
+          View Progress
+        </button>
+      </div>
+
+      <p>
+        Monitor planning activities, research, and development of the proposed solution.
+      </p>
+
+    </div>
+
+
+    <div class="progress-card">
+
+      <div class="progress-header">
+        <div>
+          <span class="progress-status">In Progress</span>
+          <h3>Smart Water Management</h3>
+        </div>
+
+        <button class="progress-action">
+          View Progress
+        </button>
+      </div>
+
+      <p>
+        Follow the development and testing of technology-driven water management solutions.
+      </p>
+
+    </div>
+
+  </div>
+
+</div>
     <div class="feature-card">
       <h3>Intelligent Collaboration</h3>
       <p>
@@ -1506,6 +1646,10 @@
   document.getElementById('impactDashboard').scrollIntoView({
     behavior: 'smooth'
   });
+} else if (selectedOption === 'Progress Tracking') {
+  document.getElementById('progressTracking').scrollIntoView({
+    behavior: 'smooth'
+  });
 }else {
   alert(`${selectedOption} selected`);
 }
@@ -1606,6 +1750,17 @@ impactCards.forEach(card => {
     const impactArea = card.querySelector('h3').textContent;
 
     alert(`Exploring impact area: ${impactArea}`);
+  });
+});
+const progressButtons = document.querySelectorAll('.progress-action');
+
+progressButtons.forEach(button => {
+  button.addEventListener('click', () => {
+    const progressCard = button.closest('.progress-card');
+    const projectTitle = progressCard.querySelector('h3').textContent;
+    const status = progressCard.querySelector('.progress-status').textContent;
+
+    alert(`${projectTitle} — Status: ${status}`);
   });
 });
 </script>
