@@ -1,0 +1,16 @@
+{
+  "name": "code4change",
+  "version": "1.0.0",
+  "description": "Full-stack Netlify Serverless + Supabase app",
+  "main": "index.js",
+  "scripts": {
+    "dev": "netlify dev"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "pg": "^8.11.5"
+  }
+}
