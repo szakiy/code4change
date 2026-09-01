@@ -681,11 +681,63 @@
   color: #64748b;
   white-space: nowrap;
 }
-    /* 9. MOBILE RESPONSIVE ADAPTATION */
+/* 9. IMPACT DASHBOARD */
+
+.impact-dashboard {
+  max-width: 1000px;
+  margin: 2rem auto;
+  background-color: #ffffff;
+  padding: 2.5rem;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.impact-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+.impact-card {
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 1.5rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.impact-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px -3px rgba(0, 0, 0, 0.12);
+}
+
+.impact-category {
+  display: inline-block;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #0284c7;
+  text-transform: uppercase;
+  margin-bottom: 0.7rem;
+}
+
+.impact-card h3 {
+  color: #0f172a;
+  margin-bottom: 0.7rem;
+}
+
+.impact-card p {
+  color: #475569;
+  font-size: 0.95rem;
+}
+    /* 10. MOBILE RESPONSIVE ADAPTATION */
     @media (max-width: 768px) {
       .mobile-toggle {
         display: block;
       }
+      .impact-grid {
+  grid-template-columns: 1fr;
+}
       .partner-grid {
   grid-template-columns: 1fr;
 }
@@ -1280,6 +1332,56 @@
   </div>
 
 </div>
+<div class="impact-dashboard" id="impactDashboard">
+
+  <div class="section-heading">
+    <h2>Impact Dashboard</h2>
+    <p>
+      Explore the real-world outcomes and areas of impact created through completed projects.
+    </p>
+  </div>
+
+  <div class="impact-grid">
+
+    <div class="impact-card">
+      <span class="impact-category">Environment</span>
+      <h3>Environmental Solutions</h3>
+      <p>
+        Projects focused on reducing waste, conserving resources,
+        and creating sustainable solutions.
+      </p>
+    </div>
+
+    <div class="impact-card">
+      <span class="impact-category">Education</span>
+      <h3>Education & Learning</h3>
+      <p>
+        Solutions designed to improve access to learning,
+        educational resources, and digital education.
+      </p>
+    </div>
+
+    <div class="impact-card">
+      <span class="impact-category">Healthcare</span>
+      <h3>Healthcare Accessibility</h3>
+      <p>
+        Projects focused on improving access to essential
+        healthcare information and services.
+      </p>
+    </div>
+
+    <div class="impact-card">
+      <span class="impact-category">Community</span>
+      <h3>Community Development</h3>
+      <p>
+        Initiatives that address local challenges and create
+        meaningful benefits for communities.
+      </p>
+    </div>
+
+  </div>
+
+</div>
     <div class="feature-card">
       <h3>Intelligent Collaboration</h3>
       <p>
@@ -1400,6 +1502,10 @@
   document.getElementById('projectsTasks').scrollIntoView({
     behavior: 'smooth'
   });
+} else if (selectedOption === 'Impact Dashboard') {
+  document.getElementById('impactDashboard').scrollIntoView({
+    behavior: 'smooth'
+  });
 }else {
   alert(`${selectedOption} selected`);
 }
@@ -1491,6 +1597,15 @@ projectActionButtons.forEach(button => {
     const projectTitle = projectCard.querySelector('h3').textContent;
 
     alert(`Opening project: ${projectTitle}`);
+  });
+});
+const impactCards = document.querySelectorAll('.impact-card');
+
+impactCards.forEach(card => {
+  card.addEventListener('click', () => {
+    const impactArea = card.querySelector('h3').textContent;
+
+    alert(`Exploring impact area: ${impactArea}`);
   });
 });
 </script>
