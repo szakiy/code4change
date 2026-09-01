@@ -453,13 +453,94 @@
 .analysis-grid .analysis-card {
   margin-bottom: 0;
 }
+/* 6. RECOMMENDED PARTNERS */
 
-    /* 6. MOBILE RESPONSIVE ADAPTATION */
+.partners-section {
+  max-width: 1000px;
+  margin: 2rem auto;
+  background-color: #ffffff;
+  padding: 2.5rem;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.partner-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+.partner-card {
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 1.5rem;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.partner-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px -3px rgba(0, 0, 0, 0.12);
+}
+
+.partner-role {
+  display: inline-block;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #0284c7;
+  text-transform: uppercase;
+  margin-bottom: 0.6rem;
+}
+
+.partner-card h3 {
+  color: #0f172a;
+  margin-bottom: 0.6rem;
+}
+
+.partner-card p {
+  color: #475569;
+  font-size: 0.95rem;
+  margin-bottom: 1rem;
+}
+
+.skill-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.2rem;
+}
+
+.skill-list span {
+  background-color: #e2e8f0;
+  color: #334155;
+  padding: 0.3rem 0.6rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+.connect-partner {
+  padding: 0.6rem 1rem;
+  background-color: #0f172a;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.connect-partner:hover {
+  background-color: #1e293b;
+}
+    /* 7. MOBILE RESPONSIVE ADAPTATION */
     @media (max-width: 768px) {
       .mobile-toggle {
         display: block;
       }
-
+      .partner-grid {
+  grid-template-columns: 1fr;
+}
       .nav-menu {
         display: none;
         flex-direction: column;
@@ -792,7 +873,104 @@
         Analyze, summarize, and understand complex challenges using AI-powered insights.
       </p>
     </div>
+    
+<div class="partners-section" id="recommendedPartners">
 
+  <div class="section-heading">
+    <h2>Recommended Partners</h2>
+    <p>
+      Find contributors with skills that match the requirements of your challenge.
+    </p>
+  </div>
+
+  <div class="partner-grid">
+
+    <div class="partner-card">
+      <span class="partner-role">Frontend Development</span>
+
+      <h3>Frontend Skills</h3>
+
+      <p>
+        Contributors experienced in building responsive and user-friendly interfaces.
+      </p>
+
+      <div class="skill-list">
+        <span>HTML</span>
+        <span>CSS</span>
+        <span>JavaScript</span>
+      </div>
+
+      <button class="connect-partner">
+        Find Contributors
+      </button>
+    </div>
+
+
+    <div class="partner-card">
+      <span class="partner-role">Backend Development</span>
+
+      <h3>Backend Skills</h3>
+
+      <p>
+        Contributors who can build APIs, databases, and server-side applications.
+      </p>
+
+      <div class="skill-list">
+        <span>Python</span>
+        <span>APIs</span>
+        <span>Databases</span>
+      </div>
+
+      <button class="connect-partner">
+        Find Contributors
+      </button>
+    </div>
+
+
+    <div class="partner-card">
+      <span class="partner-role">AI & Data</span>
+
+      <h3>AI & Data Skills</h3>
+
+      <p>
+        Contributors experienced in analyzing data and developing intelligent solutions.
+      </p>
+
+      <div class="skill-list">
+        <span>Python</span>
+        <span>Data Analysis</span>
+        <span>Machine Learning</span>
+      </div>
+
+      <button class="connect-partner">
+        Find Contributors
+      </button>
+    </div>
+
+
+    <div class="partner-card">
+      <span class="partner-role">Design</span>
+
+      <h3>UI/UX Skills</h3>
+
+      <p>
+        Contributors who can design accessible, intuitive, and engaging user experiences.
+      </p>
+
+      <div class="skill-list">
+        <span>UI Design</span>
+        <span>UX Research</span>
+        <span>Figma</span>
+      </div>
+
+      <button class="connect-partner">
+        Find Contributors
+      </button>
+    </div>
+
+  </div>
+
+</div>
     <div class="feature-card">
       <h3>Intelligent Collaboration</h3>
       <p>
@@ -901,6 +1079,10 @@
   document.getElementById('aiAnalysis').scrollIntoView({
     behavior: 'smooth'
   });
+} else if (selectedOption === 'Recommended Partners') {
+  document.getElementById('recommendedPartners').scrollIntoView({
+    behavior: 'smooth'
+  });
  } else {
   alert(`${selectedOption} selected`);
 }
@@ -963,6 +1145,16 @@ analyzeChallenge.addEventListener('click', () => {
 
   document.getElementById('potentialImpact').textContent =
     `The potential impact of "${selectedChallenge}" will be evaluated based on its scope, affected community, and possible solutions.`;
+});
+const connectButtons = document.querySelectorAll('.connect-partner');
+
+connectButtons.forEach(button => {
+  button.addEventListener('click', () => {
+    const card = button.closest('.partner-card');
+    const skillArea = card.querySelector('h3').textContent;
+
+    alert(`Finding contributors with ${skillArea}...`);
+  });
 });
 </script>
 </body>
