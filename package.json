@@ -1,7 +1,7 @@
 {
   "name": "code4change",
   "version": "1.0.0",
-  "description": "Full-stack Netlify Serverless + Supabase app",
+  "description": "Full-stack Netlify Serverless + Supabase app for Code4Change",
   "main": "index.js",
   "scripts": {
     "dev": "netlify dev"
