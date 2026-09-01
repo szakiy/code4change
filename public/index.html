@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Code4Change</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <header class="top-navbar">
+        <div class="nav-container">
+            <div class="logo">Code4Change</div>
+            <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle Menu">☰</button>
+
+            <ul class="nav-menu" id="navMenu">
+                <li class="nav-item">
+                    <span class="nav-title">Industry Section</span>
+                    <ul class="dropdown">
+                        <li class="dropdown-item">
+                            <a href="#" class="sub-option" data-view="ideas">Ideas Board</a>
+                        </li>
+                        <li class="dropdown-item">
+                            <a href="#" class="sub-option" data-view="undefined1"
+                                data-title="Undefined option 1">Undefined option 1</a>
+                        </li>
+                        <li class="dropdown-item">
+                            <a href="#" class="sub-option" data-view="undefined2"
+                                data-title="Undefined option 2">Undefined option 2</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="nav-item">
+                    <span class="nav-title">Ongoing Issues</span>
+                    <ul class="dropdown">
+                        <li class="dropdown-item">
+                            <a href="#" class="sub-option" data-view="undefined3"
+                                data-title="Undefined option 3">Undefined option 3</a>
+                        </li>
+                        <li class="dropdown-item">
+                            <a href="#" class="sub-option" data-view="undefined4"
+                                data-title="Undefined option 4">Undefined option 4</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <li class="nav-item">
+                    <span class="nav-title">Progress</span>
+                    <ul class="dropdown">
+                        <li class="dropdown-item">
+                            <a href="#" class="sub-option" data-view="undefined5"
+                                data-title="Undefined option 5">Undefined option 5</a>
+                        </li>
+                        <li class="dropdown-item">
+                            <a href="#" class="sub-option" data-view="undefined6"
+                                data-title="Undefined option 6">Undefined option 6</a>
+                        </li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </header>
+
+    <main class="content-section">
+        <div class="content-card">
+            <h1 id="contentHeading">Student Ideas Board</h1>
+            <p id="contentBody">Share, view, and update innovative project concepts below.</p>
+
+            <div id="ideasAppView" class="app-view">
+                <section class="form-card">
+                    <h2 id="form-title">Submit a New Idea</h2>
+                    <form id="idea-form">
+                        <input type="hidden" id="idea-id" value="">
+
+                        <div class="form-group">
+                            <label for="student-name">Student Name</label>
+                            <input type="text" id="student-name" placeholder="Enter full name" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="student-idea">Project Idea</label>
+                            <textarea id="student-idea" rows="4" placeholder="Describe the idea in detail..."
+                                required></textarea>
+                        </div>
+
+                        <div class="button-group">
+                            <button type="submit" id="submit-btn" class="btn btn-primary">Submit Idea</button>
+                            <button type="button" id="cancel-btn" class="btn btn-secondary hidden">Cancel Edit</button>
+                        </div>
+                    </form>
+                </section>
+
+                <section class="ideas-section">
+                    <h2>Submitted Ideas</h2>
+                    <div id="ideas-list" class="ideas-grid">
+                        <p class="loading-text">Loading ideas...</p>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
