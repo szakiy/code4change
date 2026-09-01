@@ -136,8 +136,126 @@
       font-size: clamp(0.95rem, 2vw, 1.1rem);
       color: #475569;
     }
+    .dashboard-header {
+  max-width: 1000px;
+  margin: 0 auto 2rem;
+  background-color: #ffffff;
+  padding: 2.5rem;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
 
-    /* 3. MOBILE RESPONSIVE ADAPTATION */
+.dashboard-header h1 {
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  color: #0f172a;
+  margin-bottom: 0.75rem;
+}
+
+.dashboard-header p {
+  font-size: 1.05rem;
+  color: #475569;
+  max-width: 700px;
+}
+
+
+
+.dashboard-section {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.dashboard-section h2 {
+  color: #0f172a;
+  margin-bottom: 1rem;
+}
+
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem;
+}
+
+.feature-card {
+  background-color: #ffffff;
+  padding: 1.5rem;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+}
+
+.feature-card h3 {
+  color: #0f172a;
+  margin-bottom: 0.5rem;
+}
+
+.feature-card p {
+  color: #64748b;
+}
+/* 3. CHALLENGE SUBMISSION FORM */
+
+.challenge-form {
+  max-width: 1000px;
+  margin: 2rem auto;
+  background-color: #ffffff;
+  padding: 2.5rem;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.challenge-form h2 {
+  color: #0f172a;
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+}
+
+.challenge-form form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+
+.challenge-form label {
+  color: #334155;
+  font-weight: 600;
+  margin-top: 0.5rem;
+}
+
+.challenge-form input,
+.challenge-form select,
+.challenge-form textarea {
+  width: 100%;
+  padding: 0.8rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  font-family: inherit;
+  font-size: 1rem;
+}
+
+.challenge-form input:focus,
+.challenge-form select:focus,
+.challenge-form textarea:focus {
+  outline: none;
+  border-color: #38bdf8;
+}
+
+.challenge-form button {
+  margin-top: 1rem;
+  padding: 0.8rem 1.2rem;
+  background-color: #0f172a;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.challenge-form button:hover {
+  background-color: #1e293b;
+}
+
+    /* 4. MOBILE RESPONSIVE ADAPTATION */
     @media (max-width: 768px) {
       .mobile-toggle {
         display: block;
@@ -176,6 +294,17 @@
       .dropdown-item a {
         padding: 0.5rem 1.5rem;
       }
+      .stats-grid {
+  grid-template-columns: 1fr 1fr;
+}
+
+.feature-grid {
+  grid-template-columns: 1fr;
+}
+
+.dashboard-header {
+  padding: 1.5rem;
+}
     }
   </style>
 </head>
@@ -262,39 +391,160 @@
   </header>
 
   <main class="content-section">
-    <div class="content-card">
-      <h1 id="contentHeading">Welcome to the Dashboard</h1>
-      <p id="contentBody">Please select an option from the menu above to display its corresponding details.</p>
+
+  <div class="dashboard-header">
+    <h1>Welcome to Code4Change</h1>
+    <p>
+      A platform to discover real-world challenges, collaborate on solutions,
+      and track the impact of your projects.
+    </p>
+  </div>
+  <div class="challenge-form" id="challengeForm">
+  <h2>Submit a Challenge</h2>
+
+  <form>
+    <label for="challengeTitle">Challenge Title</label>
+    <input
+      type="text"
+      id="challengeTitle"
+      placeholder="Enter challenge title"
+      required
+    >
+
+    <label for="category">Industry / Category</label>
+    <select id="category" required>
+      <option value="">Select a category</option>
+      <option value="environment">Environment</option>
+      <option value="education">Education</option>
+      <option value="healthcare">Healthcare</option>
+      <option value="technology">Technology</option>
+      <option value="social">Social Impact</option>
+    </select>
+
+    <label for="description">Problem Description</label>
+    <textarea
+      id="description"
+      rows="5"
+      placeholder="Describe the real-world problem..."
+      required
+    ></textarea>
+
+    <label for="outcome">Expected Outcome</label>
+    <textarea
+      id="outcome"
+      rows="4"
+      placeholder="What outcome or solution are you expecting?"
+      required
+    ></textarea>
+
+    <button type="submit">Submit Challenge</button>
+  </form>
+</div>
+
+  <div class="dashboard-section">
+
+  <h2>Platform Workflow</h2>
+
+  <div class="feature-grid">
+
+    <div class="feature-card">
+      <h3>Challenge Submission</h3>
+      <p>
+        Submit real-world problems and challenges that require innovative solutions.
+      </p>
     </div>
-  </main>
+
+    <div class="feature-card">
+      <h3>AI Challenge Intelligence</h3>
+      <p>
+        Analyze, summarize, and understand complex challenges using AI-powered insights.
+      </p>
+    </div>
+
+    <div class="feature-card">
+      <h3>Intelligent Collaboration</h3>
+      <p>
+        Connect with suitable contributors and work together on meaningful solutions.
+      </p>
+    </div>
+
+    <div class="feature-card">
+      <h3>Impact Tracking</h3>
+      <p>
+        Track solution progress and evaluate the real-world impact of completed projects.
+      </p>
+    </div>
+
+  </div>
+
+</div>
+
+  <div class="dashboard-section">
+    <h2>What you can do</h2>
+
+    <div class="feature-grid">
+
+      <div class="feature-card">
+        <h3>Submit a Challenge</h3>
+        <p>
+          Share a real-world problem that needs a solution.
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <h3>Explore Challenges</h3>
+        <p>
+          Discover challenges and find problems you can contribute to.
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <h3>Collaborate</h3>
+        <p>
+          Work with other contributors and manage your projects.
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <h3>Track Impact</h3>
+        <p>
+          Monitor project progress and understand the impact of your work.
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+</main>
 
   <script>
-    const mobileToggle = document.getElementById('mobileToggle');
-    const navMenu = document.getElementById('navMenu');
-    const subOptions = document.querySelectorAll('.sub-option');
-    const contentHeading = document.getElementById('contentHeading');
-    const contentBody = document.getElementById('contentBody');
+  const mobileToggle = document.getElementById('mobileToggle');
+  const navMenu = document.getElementById('navMenu');
+  const subOptions = document.querySelectorAll('.sub-option');
 
-    // Toggle Mobile Navigation Menu
-    mobileToggle.addEventListener('click', () => {
-      navMenu.classList.toggle('active');
-    });
+  // Mobile menu toggle
+  mobileToggle.addEventListener('click', () => {
+    navMenu.classList.toggle('active');
+  });
 
-    // Handle Sub-option Click & Dynamic Content Rendering
-    subOptions.forEach(option => {
-      option.addEventListener('click', (e) => {
-        e.preventDefault();
+  // Handle menu options
+  subOptions.forEach(option => {
+  option.addEventListener('click', (event) => {
+    event.preventDefault();
 
-        const selectedName = option.getAttribute('data-title');
+    const selectedOption = option.getAttribute('data-title');
 
-        // Update Content Area
-        contentHeading.textContent = selectedName;
-        contentBody.textContent = `This is the dynamically loaded view section for "${selectedName}". Select any other menu sub-option to change this content.`;
-
-        // Close mobile drawer after selection
-        navMenu.classList.remove('active');
+    if (selectedOption === 'Submit a Challenge') {
+      document.getElementById('challengeForm').scrollIntoView({
+        behavior: 'smooth'
       });
-    });
-  </script>
+    } else {
+      alert(`${selectedOption} selected`);
+    }
+
+    navMenu.classList.remove('active');
+  });
+});
+</script>
 </body>
 </html>
