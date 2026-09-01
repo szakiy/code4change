@@ -373,8 +373,88 @@
   cursor: pointer;
   font-weight: 600;
 }
+/* 5. AI CHALLENGE ANALYSIS */
 
-    /* 5. MOBILE RESPONSIVE ADAPTATION */
+.ai-analysis-section {
+  max-width: 1000px;
+  margin: 2rem auto;
+  background-color: #ffffff;
+  padding: 2.5rem;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+.ai-input-area {
+  margin-bottom: 2rem;
+}
+
+.ai-input-area label {
+  display: block;
+  font-weight: 600;
+  color: #0f172a;
+  margin-bottom: 0.5rem;
+}
+
+.ai-input-area select {
+  width: 100%;
+  padding: 0.7rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  margin-bottom: 1rem;
+  font-size: 1rem;
+}
+
+.ai-input-area button {
+  padding: 0.7rem 1.2rem;
+  background-color: #0f172a;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.ai-input-area button:hover {
+  background-color: #1e293b;
+}
+
+.analysis-card {
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.analysis-card h3 {
+  color: #0f172a;
+  margin-bottom: 0.7rem;
+}
+
+.analysis-card p {
+  color: #475569;
+}
+
+.analysis-card ul {
+  padding-left: 1.2rem;
+  color: #475569;
+}
+
+.analysis-card li {
+  margin-bottom: 0.4rem;
+}
+
+.analysis-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+.analysis-grid .analysis-card {
+  margin-bottom: 0;
+}
+
+    /* 6. MOBILE RESPONSIVE ADAPTATION */
     @media (max-width: 768px) {
       .mobile-toggle {
         display: block;
@@ -613,7 +693,86 @@
   </div>
 
 </div>
+<div class="ai-analysis-section" id="aiAnalysis">
 
+  <div class="section-heading">
+    <h2>AI Challenge Analysis</h2>
+    <p>
+      Use AI-powered insights to understand a challenge and identify possible solution areas.
+    </p>
+  </div>
+  <div class="ai-input-area">
+
+  <label for="analysisChallenge">Select a Challenge</label>
+
+  <select id="analysisChallenge">
+    <option value="">Choose a challenge</option>
+    <option value="Waste Management in Urban Areas">
+      Waste Management in Urban Areas
+    </option>
+    <option value="Improving Digital Education">
+      Improving Digital Education
+    </option>
+    <option value="Smart Water Management">
+      Smart Water Management
+    </option>
+    <option value="Healthcare Accessibility">
+      Healthcare Accessibility
+    </option>
+  </select>
+
+  <button type="button" id="analyzeChallenge">
+    Analyze Challenge
+  </button>
+
+</div>
+
+  <div class="analysis-card">
+    <h3>Challenge Summary</h3>
+    <p id="aiSummary">
+      Select a challenge to generate an AI-powered summary.
+    </p>
+  </div>
+
+  <div class="analysis-grid">
+
+    <div class="analysis-card">
+      <h3>Key Problems</h3>
+      <ul id="keyProblems">
+        <li>Identify the main problem</li>
+        <li>Understand the affected users</li>
+        <li>Determine the major constraints</li>
+      </ul>
+    </div>
+
+    <div class="analysis-card">
+      <h3>Suggested Solution Areas</h3>
+      <ul id="solutionAreas">
+        <li>Technology-based solutions</li>
+        <li>Community participation</li>
+        <li>Data-driven approaches</li>
+      </ul>
+    </div>
+
+    <div class="analysis-card">
+      <h3>Required Skills</h3>
+      <ul id="requiredSkills">
+        <li>Problem solving</li>
+        <li>Technology development</li>
+        <li>Project collaboration</li>
+      </ul>
+    </div>
+
+    <div class="analysis-card">
+      <h3>Potential Impact</h3>
+      <p id="potentialImpact">
+        AI analysis will identify the potential social and real-world impact of the solution.
+      </p>
+    </div>
+
+  </div>
+
+</div>
   <div class="dashboard-section">
 
   <h2>Platform Workflow</h2>
@@ -738,7 +897,11 @@
     behavior: 'smooth'
   });
 
-} else {
+} else if (selectedOption === 'AI Challenge Analysis') {
+  document.getElementById('aiAnalysis').scrollIntoView({
+    behavior: 'smooth'
+  });
+ } else {
   alert(`${selectedOption} selected`);
 }
 
@@ -783,6 +946,23 @@ backToChallenges.addEventListener('click', () => {
   exploreChallenges.scrollIntoView({
     behavior: 'smooth'
   });
+});
+const analysisChallenge = document.getElementById('analysisChallenge');
+const analyzeChallenge = document.getElementById('analyzeChallenge');
+
+analyzeChallenge.addEventListener('click', () => {
+  const selectedChallenge = analysisChallenge.value;
+
+  if (!selectedChallenge) {
+    alert('Please select a challenge first.');
+    return;
+  }
+
+  document.getElementById('aiSummary').textContent =
+    `AI analysis for "${selectedChallenge}" will identify the main problem, affected users, and important factors.`;
+
+  document.getElementById('potentialImpact').textContent =
+    `The potential impact of "${selectedChallenge}" will be evaluated based on its scope, affected community, and possible solutions.`;
 });
 </script>
 </body>
