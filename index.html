@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Code4Change</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Adaptive System Font Stack for Cross-Platform Clarity */
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.6;
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      color: #1e293b;
+    }
+
+    /* 1. TOP OPTIONS SECTION (Dark Background Theme) */
+    .top-navbar {
+      background-color: #0f172a;
+      color: #f8fafc;
+      padding: 1rem 2rem;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      position: relative;
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-size: 1.25rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    .mobile-toggle {
+      display: none;
+      background: none;
+      border: none;
+      color: #f8fafc;
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    .nav-menu {
+      display: flex;
+      list-style: none;
+      gap: 1.5rem;
+    }
+
+    .nav-item {
+      position: relative;
+    }
+
+    .nav-title {
+      color: #e2e8f0;
+      padding: 0.5rem 0.75rem;
+      cursor: pointer;
+      display: block;
+      font-weight: 500;
+      transition: color 0.2s ease;
+    }
+
+    .nav-title:hover {
+      color: #38bdf8;
+    }
+
+    /* Dropdown Menus */
+    .dropdown {
+      display: none;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background-color: #1e293b;
+      min-width: 200px;
+      border-radius: 6px;
+      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+      z-index: 100;
+      list-style: none;
+      padding: 0.5rem 0;
+    }
+
+    .nav-item:hover .dropdown {
+      display: block;
+    }
+
+    .dropdown-item a {
+      color: #cbd5e1;
+      padding: 0.6rem 1rem;
+      display: block;
+      text-decoration: none;
+      font-size: 0.95rem;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .dropdown-item a:hover {
+      background-color: #334155;
+      color: #ffffff;
+    }
+
+    /* 2. MAIN CONTENT VIEWING SECTION (Light Background Theme) */
+    .content-section {
+      flex: 1;
+      background-color: #f1f5f9;
+      padding: 2.5rem 1.5rem;
+    }
+
+    .content-card {
+      max-width: 1000px;
+      margin: 0 auto;
+      background-color: #ffffff;
+      padding: 2.5rem;
+      border-radius: 8px;
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    }
+
+    .content-card h1 {
+      font-size: clamp(1.5rem, 4vw, 2.25rem);
+      color: #0f172a;
+      margin-bottom: 1rem;
+    }
+
+    .content-card p {
+      font-size: clamp(0.95rem, 2vw, 1.1rem);
+      color: #475569;
+    }
+
+    /* 3. MOBILE RESPONSIVE ADAPTATION */
+    @media (max-width: 768px) {
+      .mobile-toggle {
+        display: block;
+      }
+
+      .nav-menu {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background-color: #0f172a;
+        padding: 1rem 0;
+        gap: 0;
+      }
+
+      .nav-menu.active {
+        display: flex;
+      }
+
+      .dropdown {
+        position: static;
+        display: block;
+        background-color: #1e293b;
+        box-shadow: none;
+        border-radius: 0;
+        padding-left: 1.5rem;
+      }
+
+      .nav-title {
+        padding: 0.75rem 1.5rem;
+        font-weight: 600;
+      }
+
+      .dropdown-item a {
+        padding: 0.5rem 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="top-navbar">
+    <div class="nav-container">
+      <div class="logo">Code4Change</div>
+      <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle Menu">☰</button>
+      
+      <ul class="nav-menu" id="navMenu">
+
+  <li class="nav-item">
+    <span class="nav-title">Challenges</span>
+    <ul class="dropdown">
+      <li class="dropdown-item">
+        <a href="#" class="sub-option" data-title="Submit a Challenge">
+          Submit a Challenge
+        </a>
+      </li>
+      <li class="dropdown-item">
+        <a href="#" class="sub-option" data-title="Explore Challenges">
+          Explore Challenges
+        </a>
+      </li>
+      <li class="dropdown-item">
+        <a href="#" class="sub-option" data-title="My Challenges">
+          My Challenges
+        </a>
+      </li>
+    </ul>
+  </li>
+
+  <li class="nav-item">
+    <span class="nav-title">Intelligence</span>
+    <ul class="dropdown">
+      <li class="dropdown-item">
+        <a href="#" class="sub-option" data-title="AI Challenge Analysis">
+          AI Challenge Analysis
+        </a>
+      </li>
+      <li class="dropdown-item">
+        <a href="#" class="sub-option" data-title="Recommended Partners">
+          Recommended Partners
+        </a>
+      </li>
+    </ul>
+  </li>
+
+  <li class="nav-item">
+    <span class="nav-title">Collaboration</span>
+    <ul class="dropdown">
+      <li class="dropdown-item">
+        <a href="#" class="sub-option" data-title="My Collaborations">
+          My Collaborations
+        </a>
+      </li>
+      <li class="dropdown-item">
+        <a href="#" class="sub-option" data-title="Projects & Tasks">
+          Projects & Tasks
+        </a>
+      </li>
+    </ul>
+  </li>
+
+  <li class="nav-item">
+    <span class="nav-title">Impact</span>
+    <ul class="dropdown">
+      <li class="dropdown-item">
+        <a href="#" class="sub-option" data-title="Impact Dashboard">
+          Impact Dashboard
+        </a>
+      </li>
+      <li class="dropdown-item">
+        <a href="#" class="sub-option" data-title="Progress Tracking">
+          Progress Tracking
+        </a>
+      </li>
+    </ul>
+  </li>
+
+</ul>
+    </div>
+  </header>
+
+  <main class="content-section">
+    <div class="content-card">
+      <h1 id="contentHeading">Welcome to the Dashboard</h1>
+      <p id="contentBody">Please select an option from the menu above to display its corresponding details.</p>
+    </div>
+  </main>
+
+  <script>
+    const mobileToggle = document.getElementById('mobileToggle');
+    const navMenu = document.getElementById('navMenu');
+    const subOptions = document.querySelectorAll('.sub-option');
+    const contentHeading = document.getElementById('contentHeading');
+    const contentBody = document.getElementById('contentBody');
+
+    // Toggle Mobile Navigation Menu
+    mobileToggle.addEventListener('click', () => {
+      navMenu.classList.toggle('active');
+    });
+
+    // Handle Sub-option Click & Dynamic Content Rendering
+    subOptions.forEach(option => {
+      option.addEventListener('click', (e) => {
+        e.preventDefault();
+
+        const selectedName = option.getAttribute('data-title');
+
+        // Update Content Area
+        contentHeading.textContent = selectedName;
+        contentBody.textContent = `This is the dynamically loaded view section for "${selectedName}". Select any other menu sub-option to change this content.`;
+
+        // Close mobile drawer after selection
+        navMenu.classList.remove('active');
+      });
+    });
+  </script>
+</body>
+</html>
