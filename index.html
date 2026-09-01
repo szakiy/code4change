@@ -597,13 +597,105 @@
 .open-project:hover {
   background-color: #1e293b;
 }
-    /* 8. MOBILE RESPONSIVE ADAPTATION */
+/* 8. PROJECTS & TASKS */
+
+.projects-section {
+  max-width: 1000px;
+  margin: 2rem auto;
+  background-color: #ffffff;
+  padding: 2.5rem;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.project-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.project-card {
+  background-color: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 1.5rem;
+}
+
+.project-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.project-status {
+  display: inline-block;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #0284c7;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+
+.project-card h3 {
+  color: #0f172a;
+}
+
+.project-action {
+  padding: 0.6rem 1rem;
+  background-color: #0f172a;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.project-action:hover {
+  background-color: #1e293b;
+}
+
+.task-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+}
+
+.task-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.8rem 1rem;
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  color: #475569;
+}
+
+.task-status {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #64748b;
+  white-space: nowrap;
+}
+    /* 9. MOBILE RESPONSIVE ADAPTATION */
     @media (max-width: 768px) {
       .mobile-toggle {
         display: block;
       }
       .partner-grid {
   grid-template-columns: 1fr;
+}
+.project-header {
+  flex-direction: column;
+}
+
+.task-item {
+  flex-direction: column;
+  align-items: flex-start;
 }
 .collaboration-grid {
   grid-template-columns: 1fr;
@@ -1105,6 +1197,89 @@
   </div>
 
 </div>
+<div class="projects-section" id="projectsTasks">
+
+  <div class="section-heading">
+    <h2>Projects & Tasks</h2>
+    <p>
+      Organize project work and keep track of the tasks involved in each collaboration.
+    </p>
+  </div>
+
+  <div class="project-list">
+
+    <div class="project-card">
+
+      <div class="project-header">
+        <div>
+          <span class="project-status">Active</span>
+          <h3>Waste Management in Urban Areas</h3>
+        </div>
+
+        <button class="project-action">
+          View Project
+        </button>
+      </div>
+
+      <div class="task-list">
+
+        <div class="task-item">
+          <span>Research existing waste collection methods</span>
+          <span class="task-status">In Progress</span>
+        </div>
+
+        <div class="task-item">
+          <span>Identify possible technology solutions</span>
+          <span class="task-status">Pending</span>
+        </div>
+
+        <div class="task-item">
+          <span>Prepare solution proposal</span>
+          <span class="task-status">Pending</span>
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <div class="project-card">
+
+      <div class="project-header">
+        <div>
+          <span class="project-status">Planning</span>
+          <h3>Improving Digital Education</h3>
+        </div>
+
+        <button class="project-action">
+          View Project
+        </button>
+      </div>
+
+      <div class="task-list">
+
+        <div class="task-item">
+          <span>Identify accessibility challenges</span>
+          <span class="task-status">In Progress</span>
+        </div>
+
+        <div class="task-item">
+          <span>Research digital learning tools</span>
+          <span class="task-status">Pending</span>
+        </div>
+
+        <div class="task-item">
+          <span>Develop solution concept</span>
+          <span class="task-status">Pending</span>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
     <div class="feature-card">
       <h3>Intelligent Collaboration</h3>
       <p>
@@ -1221,6 +1396,10 @@
   document.getElementById('myCollaborations').scrollIntoView({
     behavior: 'smooth'
   });
+} else if (selectedOption === 'Projects & Tasks') {
+  document.getElementById('projectsTasks').scrollIntoView({
+    behavior: 'smooth'
+  });
 }else {
   alert(`${selectedOption} selected`);
 }
@@ -1300,6 +1479,16 @@ projectButtons.forEach(button => {
   button.addEventListener('click', () => {
     const project = button.closest('.collaboration-card');
     const projectTitle = project.querySelector('h3').textContent;
+
+    alert(`Opening project: ${projectTitle}`);
+  });
+});
+const projectActionButtons = document.querySelectorAll('.project-action');
+
+projectActionButtons.forEach(button => {
+  button.addEventListener('click', () => {
+    const projectCard = button.closest('.project-card');
+    const projectTitle = projectCard.querySelector('h3').textContent;
 
     alert(`Opening project: ${projectTitle}`);
   });
