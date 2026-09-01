@@ -254,8 +254,127 @@
 .challenge-form button:hover {
   background-color: #1e293b;
 }
+/* 4. EXPLORE CHALLENGES */
 
-    /* 4. MOBILE RESPONSIVE ADAPTATION */
+.explore-section {
+  max-width: 1000px;
+  margin: 2rem auto;
+  background-color: #ffffff;
+  padding: 2.5rem;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.section-heading {
+  margin-bottom: 2rem;
+}
+
+.section-heading h2 {
+  color: #0f172a;
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
+}
+
+.section-heading p {
+  color: #475569;
+}
+
+.challenge-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+.challenge-card {
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 1.5rem;
+  background-color: #f8fafc;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.challenge-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 12px -3px rgba(0, 0, 0, 0.12);
+}
+
+.challenge-category {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #0284c7;
+  text-transform: uppercase;
+}
+
+.challenge-card h3 {
+  color: #0f172a;
+  margin: 0.6rem 0;
+  font-size: 1.2rem;
+}
+
+.challenge-card p {
+  color: #475569;
+  font-size: 0.95rem;
+  margin-bottom: 1rem;
+}
+
+.view-challenge {
+  padding: 0.6rem 1rem;
+  background-color: #0f172a;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.view-challenge:hover {
+  background-color: #1e293b;
+}
+.challenge-details {
+  display: none;
+  max-width: 1000px;
+  margin: 2rem auto;
+  background-color: #ffffff;
+  padding: 2.5rem;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.back-button {
+  background: none;
+  border: none;
+  color: #0284c7;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  margin-bottom: 2rem;
+}
+
+.challenge-details h2 {
+  color: #0f172a;
+  font-size: 2rem;
+  margin: 0.7rem 0;
+}
+
+.challenge-details p {
+  color: #475569;
+  font-size: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.join-challenge {
+  padding: 0.7rem 1.2rem;
+  background-color: #0f172a;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+    /* 5. MOBILE RESPONSIVE ADAPTATION */
     @media (max-width: 768px) {
       .mobile-toggle {
         display: block;
@@ -440,6 +559,60 @@
     <button type="submit">Submit Challenge</button>
   </form>
 </div>
+<div class="explore-section" id="exploreChallenges">
+
+  <div class="section-heading">
+    <h2>Explore Challenges</h2>
+    <p>
+      Discover real-world challenges and explore opportunities to create meaningful solutions.
+    </p>
+  </div>
+
+  <div class="challenge-grid">
+
+    <div class="challenge-card">
+      <span class="challenge-category">Environment</span>
+      <h3>Waste Management in Urban Areas</h3>
+      <p>
+        Find innovative ways to improve waste collection, segregation,
+        and recycling in growing cities.
+      </p>
+      <button class="view-challenge">View Challenge</button>
+    </div>
+
+    <div class="challenge-card">
+      <span class="challenge-category">Education</span>
+      <h3>Improving Digital Education</h3>
+      <p>
+        Develop solutions that make quality digital learning more accessible
+        to students.
+      </p>
+      <button class="view-challenge">View Challenge</button>
+    </div>
+
+    <div class="challenge-card">
+      <span class="challenge-category">Water</span>
+      <h3>Smart Water Management</h3>
+      <p>
+        Explore technology-driven approaches to reduce water wastage
+        and improve resource management.
+      </p>
+      <button class="view-challenge">View Challenge</button>
+    </div>
+
+    <div class="challenge-card">
+      <span class="challenge-category">Healthcare</span>
+      <h3>Healthcare Accessibility</h3>
+      <p>
+        Identify ways technology can help communities access essential
+        healthcare services.
+      </p>
+      <button class="view-challenge">View Challenge</button>
+    </div>
+
+  </div>
+
+</div>
 
   <div class="dashboard-section">
 
@@ -514,6 +687,27 @@
 
     </div>
   </div>
+  <div class="challenge-details" id="challengeDetails">
+
+  <button class="back-button" id="backToChallenges">
+    ← Back to Challenges
+  </button>
+
+  <span class="challenge-category" id="detailCategory">
+    Environment
+  </span>
+
+  <h2 id="detailTitle">Challenge Title</h2>
+
+  <p id="detailDescription">
+    Challenge description will appear here.
+  </p>
+
+  <button class="join-challenge" id="joinChallenge">
+    Join Challenge
+  </button>
+
+</div>
 
 </main>
 
@@ -535,14 +729,59 @@
     const selectedOption = option.getAttribute('data-title');
 
     if (selectedOption === 'Submit a Challenge') {
-      document.getElementById('challengeForm').scrollIntoView({
-        behavior: 'smooth'
-      });
-    } else {
-      alert(`${selectedOption} selected`);
-    }
+  document.getElementById('challengeForm').scrollIntoView({
+    behavior: 'smooth'
+  });
+
+} else if (selectedOption === 'Explore Challenges') {
+  document.getElementById('exploreChallenges').scrollIntoView({
+    behavior: 'smooth'
+  });
+
+} else {
+  alert(`${selectedOption} selected`);
+}
 
     navMenu.classList.remove('active');
+  });
+});
+const challengeCards = document.querySelectorAll('.challenge-card');
+const challengeDetails = document.getElementById('challengeDetails');
+const exploreChallenges = document.getElementById('exploreChallenges');
+
+const detailTitle = document.getElementById('detailTitle');
+const detailCategory = document.getElementById('detailCategory');
+const detailDescription = document.getElementById('detailDescription');
+
+const backToChallenges = document.getElementById('backToChallenges');
+
+challengeCards.forEach(card => {
+  const viewButton = card.querySelector('.view-challenge');
+
+  viewButton.addEventListener('click', () => {
+    const title = card.querySelector('h3').textContent;
+    const category = card.querySelector('.challenge-category').textContent;
+    const description = card.querySelector('p').textContent;
+
+    detailTitle.textContent = title;
+    detailCategory.textContent = category;
+    detailDescription.textContent = description;
+
+    exploreChallenges.style.display = 'none';
+    challengeDetails.style.display = 'block';
+
+    challengeDetails.scrollIntoView({
+      behavior: 'smooth'
+    });
+  });
+});
+
+backToChallenges.addEventListener('click', () => {
+  challengeDetails.style.display = 'none';
+  exploreChallenges.style.display = 'block';
+
+  exploreChallenges.scrollIntoView({
+    behavior: 'smooth'
   });
 });
 </script>
