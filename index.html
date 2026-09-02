@@ -1666,6 +1666,16 @@ const detailCategory = document.getElementById('detailCategory');
 const detailDescription = document.getElementById('detailDescription');
 
 const backToChallenges = document.getElementById('backToChallenges');
+const joinChallenge = document.getElementById('joinChallenge');
+joinChallenge.addEventListener('click', () => {
+  const challengeTitle =
+    document.getElementById('detailTitle').textContent;
+
+  joinChallenge.textContent = 'Joined';
+  joinChallenge.disabled = true;
+
+  alert(`You have joined "${challengeTitle}"!`);
+});
 
 challengeCards.forEach(card => {
   const viewButton = card.querySelector('.view-challenge');
@@ -1676,10 +1686,13 @@ challengeCards.forEach(card => {
     const description = card.querySelector('p').textContent;
 
     detailTitle.textContent = title;
-    detailCategory.textContent = category;
-    detailDescription.textContent = description;
+detailCategory.textContent = category;
+detailDescription.textContent = description;
 
-    exploreChallenges.style.display = 'none';
+joinChallenge.textContent = 'Join Challenge';
+joinChallenge.disabled = false;
+
+exploreChallenges.style.display = 'none';
     challengeDetails.style.display = 'block';
 
     challengeDetails.scrollIntoView({
@@ -1698,7 +1711,6 @@ backToChallenges.addEventListener('click', () => {
 });
 const analysisChallenge = document.getElementById('analysisChallenge');
 const analyzeChallenge = document.getElementById('analyzeChallenge');
-
 analyzeChallenge.addEventListener('click', () => {
   const selectedChallenge = analysisChallenge.value;
 
@@ -1707,12 +1719,112 @@ analyzeChallenge.addEventListener('click', () => {
     return;
   }
 
-  document.getElementById('aiSummary').textContent =
-    `AI analysis for "${selectedChallenge}" will identify the main problem, affected users, and important factors.`;
+  analyzeChallenge.textContent = 'Analyzing...';
+  analyzeChallenge.disabled = true;
 
-  document.getElementById('potentialImpact').textContent =
-    `The potential impact of "${selectedChallenge}" will be evaluated based on its scope, affected community, and possible solutions.`;
+  const analysisData = {
+    "Waste Management in Urban Areas": {
+      summary: "Urban waste management can be improved by addressing inefficient collection, poor waste segregation, and limited community participation.",
+      problems: [
+        "Inefficient waste collection",
+        "Poor waste segregation",
+        "Limited community participation"
+      ],
+      solutions: [
+        "Smart waste collection systems",
+        "Waste segregation awareness",
+        "Data-driven collection planning"
+      ],
+      skills: [
+        "Web or mobile development",
+        "Data analysis",
+        "Community engagement"
+      ],
+      impact: "Better waste management can support cleaner communities, improve resource recovery, and encourage responsible waste disposal."
+    },
+
+    "Improving Digital Education": {
+      summary: "Digital education can be improved by making learning resources more accessible, engaging, and suitable for students with different learning needs.",
+      problems: [
+        "Limited access to digital learning resources",
+        "Difficulty maintaining student engagement",
+        "Different learning needs among students"
+      ],
+      solutions: [
+        "Accessible learning platforms",
+        "Interactive educational tools",
+        "Personalized learning approaches"
+      ],
+      skills: [
+        "Web development",
+        "UI/UX design",
+        "Educational technology"
+      ],
+      impact: "Improved digital education can make learning resources more accessible and create better learning experiences for students."
+    },
+
+    "Smart Water Management": {
+      summary: "Smart water management focuses on reducing unnecessary water usage, detecting problems early, and improving how water resources are monitored.",
+      problems: [
+        "Unnecessary water consumption",
+        "Difficulty detecting leaks",
+        "Limited monitoring of water usage"
+      ],
+      solutions: [
+        "Water monitoring systems",
+        "Leak detection technology",
+        "Usage analysis and alerts"
+      ],
+      skills: [
+        "IoT development",
+        "Data analysis",
+        "Software development"
+      ],
+      impact: "Smarter water management can help communities use water more efficiently and identify problems before they become larger issues."
+    },
+
+    "Healthcare Accessibility": {
+      summary: "Healthcare accessibility can be improved by reducing barriers that prevent people from finding information, services, and appropriate care.",
+      problems: [
+        "Limited access to healthcare services",
+        "Difficulty finding reliable information",
+        "Barriers to connecting people with appropriate care"
+      ],
+      solutions: [
+        "Healthcare information platforms",
+        "Service discovery tools",
+        "Digital communication systems"
+      ],
+      skills: [
+        "Web or mobile development",
+        "UI/UX design",
+        "Data management"
+      ],
+      impact: "Better healthcare accessibility can help people find relevant services and information more easily."
+    }
+  };
+
+  const data = analysisData[selectedChallenge];
+
+  document.getElementById('aiSummary').textContent = data.summary;
+
+  document.getElementById('keyProblems').innerHTML =
+    data.problems.map(problem => `<li>${problem}</li>`).join('');
+
+  document.getElementById('solutionAreas').innerHTML =
+    data.solutions.map(solution => `<li>${solution}</li>`).join('');
+
+  document.getElementById('requiredSkills').innerHTML =
+    data.skills.map(skill => `<li>${skill}</li>`).join('');
+
+  document.getElementById('potentialImpact').textContent = data.impact;
+
+  setTimeout(() => {
+    analyzeChallenge.textContent = 'Analyze Challenge';
+    analyzeChallenge.disabled = false;
+  }, 800);
 });
+
 const connectButtons = document.querySelectorAll('.connect-partner');
 
 connectButtons.forEach(button => {
@@ -1762,6 +1874,39 @@ progressButtons.forEach(button => {
 
     alert(`${projectTitle} — Status: ${status}`);
   });
+});
+const challengeForm = document.querySelector('#challengeForm form');
+
+challengeForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+
+  const title = document.getElementById('challengeTitle').value.trim();
+  const category = document.getElementById('category').value;
+  const description = document.getElementById('description').value.trim();
+  const outcome = document.getElementById('outcome').value.trim();
+
+  if (!title || !category || !description || !outcome) {
+    alert('Please complete all fields.');
+    return;
+  }
+
+  const exploreGrid = document.querySelector('.challenge-grid');
+
+const challengeCard = document.createElement('div');
+challengeCard.className = 'challenge-card';
+
+challengeCard.innerHTML = `
+  <span class="challenge-category">${category}</span>
+  <h3>${title}</h3>
+  <p>${description}</p>
+  <button class="view-challenge">View Challenge</button>
+`;
+
+exploreGrid.appendChild(challengeCard);
+
+alert(`Challenge "${title}" submitted successfully!`);
+
+challengeForm.reset();
 });
 </script>
 </body>
