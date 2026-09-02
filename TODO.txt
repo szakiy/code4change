@@ -1,0 +1,20 @@
+1. Update Database Structure
+  Create Table for 
+    Challenges
+        Contains full statement of the challenge posted and its categorization with a Challenge_ID.
+        Contains it's progress stage id.
+
+    Challenge Categories
+        Contains ID'S of posts related to a Specific Category
+
+    Industry IDs + Assigned/Interested Categories
+
+    Industry progress for challenges.
+
+
+2. Connect Front-end elements To backend
+
+3. Write queries for accessing data from DB.
+
+4. Update JS for AI Use and categorization of Challenges.
+
