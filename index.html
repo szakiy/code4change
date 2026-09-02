@@ -470,7 +470,59 @@
   grid-template-columns: repeat(2, 1fr);
   gap: 1.5rem;
 }
+.partner-filter {
+  display: flex;
+  align-items: end;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  background: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
 
+.partner-filter label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+}
+
+.partner-filter select {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 1rem;
+  background: #ffffff;
+}
+
+.partner-filter button {
+  padding: 0.75rem 1.25rem;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.partner-filter button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+.partner-select {
+  flex: 1;
+}
+
+@media (max-width: 768px) {
+  .partner-filter {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .partner-filter button {
+    width: 100%;
+  }
+}
 .partner-card {
   background-color: #f8fafc;
   border: 1px solid #e2e8f0;
@@ -497,7 +549,9 @@
   color: #0f172a;
   margin-bottom: 0.6rem;
 }
-
+.partner-card {
+  display: none;
+}
 .partner-card p {
   color: #475569;
   font-size: 0.95rem;
@@ -1163,7 +1217,7 @@
 
   <div class="partner-grid">
 
-    <div class="partner-card">
+    <div class="partner-card" data-skill="technology">
       <span class="partner-role">Frontend Development</span>
 
       <h3>Frontend Skills</h3>
@@ -1182,9 +1236,23 @@
         Find Contributors
       </button>
     </div>
+<div class="partner-filter">
+  <label for="partnerSkill">Find collaborators by skill</label>
 
+  <select id="partnerSkill">
+    <option value="">Choose a skill area</option>
+    <option value="technology">Technology Development</option>
+    <option value="design">UI/UX Design</option>
+    <option value="data">Data Analysis</option>
+    <option value="community">Community Engagement</option>
+  </select>
 
-    <div class="partner-card">
+  <button type="button" id="findPartners">
+    Find Matches
+  </button>
+</div>
+
+    <div class="partner-card" data-skill="technology">
       <span class="partner-role">Backend Development</span>
 
       <h3>Backend Skills</h3>
@@ -1205,7 +1273,7 @@
     </div>
 
 
-    <div class="partner-card">
+    <div class="partner-card" data-skill="data">
       <span class="partner-role">AI & Data</span>
 
       <h3>AI & Data Skills</h3>
@@ -1226,7 +1294,7 @@
     </div>
 
 
-    <div class="partner-card">
+    <div class="partner-card" data-skill="design">
       <span class="partner-role">Design</span>
 
       <h3>UI/UX Skills</h3>
@@ -1826,6 +1894,33 @@ analyzeChallenge.addEventListener('click', () => {
 });
 
 const connectButtons = document.querySelectorAll('.connect-partner');
+const partnerSkill = document.getElementById('partnerSkill');
+const findPartners = document.getElementById('findPartners');
+const partnerCards = document.querySelectorAll('.partner-card');
+
+findPartners.addEventListener('click', () => {
+  const selectedSkill = partnerSkill.value;
+
+  if (!selectedSkill) {
+    alert('Please select a skill area first.');
+    return;
+  }
+
+  let matchFound = false;
+
+  partnerCards.forEach(card => {
+    if (card.dataset.skill === selectedSkill) {
+      card.style.display = 'block';
+      matchFound = true;
+    } else {
+      card.style.display = 'none';
+    }
+  });
+
+  if (!matchFound) {
+    alert('No matching collaborators found.');
+  }
+});
 
 connectButtons.forEach(button => {
   button.addEventListener('click', () => {
