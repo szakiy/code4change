@@ -760,6 +760,22 @@
   padding: 1.5rem;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
+.impact-details {
+  margin-top: 1.5rem;
+  padding: 1.5rem;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+}
+
+.impact-details h3 {
+  margin-bottom: 0.75rem;
+}
+
+.impact-details p {
+  color: #475569;
+  line-height: 1.6;
+}
 
 .impact-card:hover {
   transform: translateY(-3px);
@@ -1777,7 +1793,15 @@
     </div>
 
   </div>
+<div class="impact-details" id="impactDetails">
 
+  <h3 id="impactDetailsTitle">Select an Impact Area</h3>
+
+  <p id="impactDetailsText">
+    Select an impact area above to explore how projects can create meaningful outcomes.
+  </p>
+
+</div>
 </div>
 <div class="progress-section" id="progressTracking">
 
@@ -2205,11 +2229,77 @@ projectButtons.forEach(button => {
 
 const impactCards = document.querySelectorAll('.impact-card');
 
+const impactDetailsTitle =
+  document.getElementById('impactDetailsTitle');
+
+const impactDetailsText =
+  document.getElementById('impactDetailsText');
+
+const impactDescriptions = {
+  'Environmental Solutions': {
+    description:
+      'Explore projects that reduce waste, conserve resources, and support sustainable communities.',
+    projects: [
+      'Waste Management in Urban Areas',
+      'Smart Water Management'
+    ]
+  },
+
+  'Education & Learning': {
+    description:
+      'Explore projects that improve access to learning, educational resources, and digital education.',
+    projects: [
+      'Improving Digital Education'
+    ]
+  },
+
+  'Healthcare Accessibility': {
+    description:
+      'Explore projects that focus on making essential healthcare information and services more accessible.',
+    projects: [
+      'Healthcare Accessibility'
+    ]
+  },
+
+  'Community Development': {
+    description:
+      'Explore projects that address local challenges and create meaningful benefits for communities.',
+    projects: [
+      'Waste Management in Urban Areas',
+      'Improving Digital Education',
+      'Smart Water Management'
+    ]
+  }
+};
+
 impactCards.forEach(card => {
   card.addEventListener('click', () => {
     const impactArea = card.querySelector('h3').textContent;
 
-    alert(`Exploring impact area: ${impactArea}`);
+    const impactData = impactDescriptions[impactArea];
+
+impactDetailsTitle.textContent = impactArea;
+impactDetailsText.textContent = impactData.description;
+const projectList = document.createElement('ul');
+
+impactData.projects.forEach(project => {
+  const projectItem = document.createElement('li');
+  projectItem.textContent = project;
+  projectList.appendChild(projectItem);
+});
+
+const existingList = document.getElementById('impactProjectList');
+
+if (existingList) {
+  existingList.remove();
+}
+
+projectList.id = 'impactProjectList';
+impactDetailsText.after(projectList);
+    document.getElementById('impactDetails').scrollIntoView({
+      behavior: 'smooth',
+      block: 'nearest'
+    });
   });
 });
 const progressButtons = document.querySelectorAll('.progress-action');
