@@ -918,6 +918,37 @@
   padding: 1.5rem;
 }
     }
+    .project-progress {
+  margin-top: 1.5rem;
+  padding: 1.25rem;
+  background: #f8fafc;
+  border-radius: 10px;
+}
+
+.project-progress h3 {
+  margin-bottom: 1rem;
+}
+
+.progress-track {
+  width: 100%;
+  height: 10px;
+  background: #e2e8f0;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  width: 50%;
+  height: 100%;
+  border-radius: 10px;
+  background: #0f172a;
+  transition: width 0.3s ease;
+}
+
+#projectProgressText {
+  margin-top: 0.75rem;
+  color: #475569;
+}
   </style>
 </head>
 <body>
@@ -1380,6 +1411,59 @@
       </button>
 
     </div>
+
+  </div>
+
+</div>
+<div class="project-workspace" id="projectWorkspace" style="display: none;">
+
+  <div class="section-heading">
+    <h2 id="workspaceTitle">Project Workspace</h2>
+    <p id="workspaceDescription">
+      Manage your collaboration and work on the selected project.
+    </p>
+  </div>
+
+  <div class="workspace-card">
+
+    <span class="collaboration-status" id="workspaceStatus">
+      In Progress
+    </span>
+
+    <h3>Project Overview</h3>
+
+    <p id="workspaceDetails">
+      Select a project from My Collaborations to view its workspace.
+    </p>
+    <div class="project-progress">
+  <h3>Project Progress</h3>
+
+  <div class="progress-track">
+    <div class="progress-fill" id="projectProgressFill"></div>
+  </div>
+
+  <p id="projectProgressText">Project is currently in progress.</p>
+</div>
+    <div class="project-notes">
+  <h3>Project Notes</h3>
+  <div id="notesList">
+    <p>No project notes added yet.</p>
+  </div>
+</div>
+<div class="workspace-actions">
+
+  <button type="button" id="addNote">
+    Add Project Note
+  </button>
+
+  <button type="button" id="completeProject">
+    Mark as Complete
+  </button>
+
+</div>
+    <button type="button" id="closeWorkspace">
+      Close Project
+    </button>
 
   </div>
 
@@ -2002,6 +2086,95 @@ exploreGrid.appendChild(challengeCard);
 alert(`Challenge "${title}" submitted successfully!`);
 
 challengeForm.reset();
+});
+const openProjectButtons = document.querySelectorAll('.open-project');
+
+const projectWorkspace = document.getElementById('projectWorkspace');
+const workspaceTitle = document.getElementById('workspaceTitle');
+const workspaceDescription = document.getElementById('workspaceDescription');
+const workspaceStatus = document.getElementById('workspaceStatus');
+const workspaceDetails = document.getElementById('workspaceDetails');
+const projectProgressFill = document.getElementById('projectProgressFill');
+const projectProgressText = document.getElementById('projectProgressText');
+openProjectButtons.forEach(button => {
+  button.addEventListener('click', () => {
+    const card = button.closest('.collaboration-card');
+
+    const projectName = card.querySelector('h3').textContent;
+    const projectDescription = card.querySelector('p').textContent;
+    const projectStatus = card.querySelector('.collaboration-status').textContent;
+
+    workspaceTitle.textContent = projectName;
+    workspaceDescription.textContent =
+      'Manage your collaboration and work on the selected project.';
+    workspaceStatus.textContent = projectStatus;
+    completeProject.textContent = 'Mark as Complete';
+completeProject.disabled = false;
+    if (projectStatus.trim() === 'Completed') {
+  projectProgressFill.style.width = '100%';
+  projectProgressText.textContent = 'Project completed.';
+} else if (projectStatus.trim() === 'Planning') {
+  projectProgressFill.style.width = '25%';
+  projectProgressText.textContent = 'Project is currently in the planning stage.';
+} else {
+  projectProgressFill.style.width = '50%';
+  projectProgressText.textContent = 'Project is currently in progress.';
+}
+    workspaceDetails.textContent = projectDescription;
+notesList.innerHTML = '<p>No project notes added yet.</p>';
+    projectWorkspace.style.display = 'block';
+
+    projectWorkspace.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start'
+    });
+  });
+});
+const closeWorkspace = document.getElementById('closeWorkspace');
+
+closeWorkspace.addEventListener('click', () => {
+  projectWorkspace.style.display = 'none';
+});
+const completeProject = document.getElementById('completeProject');
+
+completeProject.addEventListener('click', () => {
+  workspaceStatus.textContent = 'Completed';
+  completeProject.textContent = 'Project Completed';
+  completeProject.disabled = true;
+
+  projectProgressFill.style.width = '100%';
+  projectProgressText.textContent = 'Project completed.';
+
+  const currentProject = [...openProjectButtons].find(button => {
+    const card = button.closest('.collaboration-card');
+    return card.querySelector('h3').textContent === workspaceTitle.textContent;
+  });
+
+  if (currentProject) {
+    const card = currentProject.closest('.collaboration-card');
+    card.querySelector('.collaboration-status').textContent = 'Completed';
+  }
+});
+const addNote = document.getElementById('addNote');
+const notesList = document.getElementById('notesList');
+
+addNote.addEventListener('click', () => {
+  const note = prompt('Enter a project note:');
+
+  if (!note || !note.trim()) {
+    return;
+  }
+
+  const firstNote = notesList.querySelector('p');
+
+  if (firstNote && firstNote.textContent === 'No project notes added yet.') {
+    notesList.innerHTML = '';
+  }
+
+  const noteElement = document.createElement('p');
+  noteElement.textContent = note.trim();
+
+  notesList.appendChild(noteElement);
 });
 </script>
 </body>
