@@ -949,6 +949,135 @@
   margin-top: 0.75rem;
   color: #475569;
 }
+.project-workspace {
+  max-width: 1000px;
+  margin: 2rem auto;
+  background: #ffffff;
+  padding: 2.5rem;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.workspace-card {
+  background: #f8fafc;
+  padding: 1.5rem;
+  border-radius: 10px;
+  border: 1px solid #e2e8f0;
+}
+
+.workspace-card h3 {
+  margin: 1rem 0 0.75rem;
+}
+
+.workspace-card p {
+  color: #475569;
+  line-height: 1.6;
+}
+
+.workspace-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.workspace-actions button,
+#closeWorkspace {
+  padding: 0.7rem 1.1rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.workspace-actions button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.project-notes {
+  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #e2e8f0;
+}
+
+.project-notes h3 {
+  margin-bottom: 0.75rem;
+}
+
+#notesList p {
+  margin-bottom: 0.6rem;
+}
+
+#closeWorkspace {
+  margin-top: 1.5rem;
+}
+
+@media (max-width: 768px) {
+  .project-workspace {
+    margin: 1rem;
+    padding: 1.5rem;
+  }
+
+  .workspace-actions {
+    flex-direction: column;
+  }
+
+  .workspace-actions button,
+  #closeWorkspace {
+    width: 100%;
+  }
+}
+.task-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.task-toggle {
+  padding: 0.5rem 0.8rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}
+.add-task {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.task-input {
+  flex: 1;
+  padding: 0.7rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+.add-task-button {
+  padding: 0.7rem 1rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  .add-task {
+    flex-direction: column;
+  }
+}
+.task-toggle:disabled {
+  cursor: default;
+  opacity: 0.7;
+}
+
+.task-item.completed span:first-child {
+  text-decoration: line-through;
+  opacity: 0.6;
+}
   </style>
 </head>
 <body>
@@ -1476,7 +1605,15 @@
       Organize project work and keep track of the tasks involved in each collaboration.
     </p>
   </div>
+<div class="task-filter">
+  <label for="taskFilter">Filter Tasks</label>
 
+  <select id="taskFilter">
+    <option value="all">All Tasks</option>
+    <option value="pending">Pending</option>
+    <option value="completed">Completed</option>
+  </select>
+</div>
   <div class="project-list">
 
     <div class="project-card">
@@ -1494,21 +1631,24 @@
 
       <div class="task-list">
 
-        <div class="task-item">
-          <span>Research existing waste collection methods</span>
-          <span class="task-status">In Progress</span>
-        </div>
+       <div class="task-item">
+  <span>Research existing waste collection methods</span>
+  <button class="task-toggle" type="button">Mark Complete</button>
+</div>
 
         <div class="task-item">
           <span>Identify possible technology solutions</span>
-          <span class="task-status">Pending</span>
+          <button class="task-toggle" type="button">Mark Complete</button>
         </div>
 
         <div class="task-item">
           <span>Prepare solution proposal</span>
-          <span class="task-status">Pending</span>
+          <button class="task-toggle" type="button">Mark Complete</button>
         </div>
-
+<div class="add-task">
+  <input type="text" class="task-input" placeholder="Enter a new task">
+  <button type="button" class="add-task-button">Add Task</button>
+</div>
       </div>
 
     </div>
@@ -1531,23 +1671,61 @@
 
         <div class="task-item">
           <span>Identify accessibility challenges</span>
-          <span class="task-status">In Progress</span>
+          <button class="task-toggle" type="button">Mark Complete</button>
         </div>
 
         <div class="task-item">
           <span>Research digital learning tools</span>
-          <span class="task-status">Pending</span>
+          <button class="task-toggle" type="button">Mark Complete</button>
         </div>
 
         <div class="task-item">
           <span>Develop solution concept</span>
-          <span class="task-status">Pending</span>
+          <button class="task-toggle" type="button">Mark Complete</button>
         </div>
-
+<div class="add-task">
+  <input type="text" class="task-input" placeholder="Enter a new task">
+  <button type="button" class="add-task-button">Add Task</button>
+</div>
       </div>
 
     </div>
+<div class="project-card">
 
+  <div class="project-header">
+    <div>
+      <span class="project-status">Active</span>
+      <h3>Smart Water Management</h3>
+    </div>
+
+    <button class="project-action" type="button">
+      View Project
+    </button>
+  </div>
+
+  <div class="task-list">
+
+    <div class="task-item">
+      <span>Identify major sources of water wastage</span>
+      <button class="task-toggle" type="button">Mark Complete</button>
+    </div>
+
+    <div class="task-item">
+      <span>Research water monitoring technologies</span>
+      <button class="task-toggle" type="button">Mark Complete</button>
+    </div>
+
+    <div class="task-item">
+      <span>Develop a water management solution concept</span>
+      <button class="task-toggle" type="button">Mark Complete</button>
+    </div>
+<div class="add-task">
+  <input type="text" class="task-input" placeholder="Enter a new task">
+  <button type="button" class="add-task-button">Add Task</button>
+</div>
+  </div>
+
+</div>
   </div>
 
 </div>
@@ -2024,16 +2202,7 @@ projectButtons.forEach(button => {
     alert(`Opening project: ${projectTitle}`);
   });
 });
-const projectActionButtons = document.querySelectorAll('.project-action');
 
-projectActionButtons.forEach(button => {
-  button.addEventListener('click', () => {
-    const projectCard = button.closest('.project-card');
-    const projectTitle = projectCard.querySelector('h3').textContent;
-
-    alert(`Opening project: ${projectTitle}`);
-  });
-});
 const impactCards = document.querySelectorAll('.impact-card');
 
 impactCards.forEach(card => {
@@ -2096,6 +2265,8 @@ const workspaceStatus = document.getElementById('workspaceStatus');
 const workspaceDetails = document.getElementById('workspaceDetails');
 const projectProgressFill = document.getElementById('projectProgressFill');
 const projectProgressText = document.getElementById('projectProgressText');
+const completeProject = document.getElementById('completeProject');
+
 openProjectButtons.forEach(button => {
   button.addEventListener('click', () => {
     const card = button.closest('.collaboration-card');
@@ -2135,8 +2306,6 @@ const closeWorkspace = document.getElementById('closeWorkspace');
 closeWorkspace.addEventListener('click', () => {
   projectWorkspace.style.display = 'none';
 });
-const completeProject = document.getElementById('completeProject');
-
 completeProject.addEventListener('click', () => {
   workspaceStatus.textContent = 'Completed';
   completeProject.textContent = 'Project Completed';
@@ -2175,6 +2344,136 @@ addNote.addEventListener('click', () => {
   noteElement.textContent = note.trim();
 
   notesList.appendChild(noteElement);
+});
+const taskButtons = document.querySelectorAll('.task-toggle');
+
+taskButtons.forEach(button => {
+  button.addEventListener('click', () => {
+    const taskItem = button.closest('.task-item');
+    const projectCard = button.closest('.project-card');
+
+    taskItem.classList.add('completed');
+    button.textContent = 'Completed';
+    button.disabled = true;
+
+    const tasks = projectCard.querySelectorAll('.task-item');
+    const completedTasks =
+      projectCard.querySelectorAll('.task-item.completed');
+
+    if (tasks.length === completedTasks.length) {
+      projectCard.querySelector('.project-status').textContent = 'Completed';
+    }
+  });
+});
+const addTaskButtons = document.querySelectorAll('.add-task-button');
+
+addTaskButtons.forEach(button => {
+  button.addEventListener('click', () => {
+    const addTask = button.closest('.add-task');
+    const input = addTask.querySelector('.task-input');
+    const taskText = input.value.trim();
+
+    if (!taskText) {
+      return;
+    }
+
+    const taskList = addTask.closest('.task-list');
+
+    const taskItem = document.createElement('div');
+    taskItem.className = 'task-item';
+
+    const taskTextElement = document.createElement('span');
+    taskTextElement.textContent = taskText;
+
+    const completeButton = document.createElement('button');
+    completeButton.type = 'button';
+    completeButton.className = 'task-toggle';
+    completeButton.textContent = 'Mark Complete';
+
+    taskItem.appendChild(taskTextElement);
+    taskItem.appendChild(completeButton);
+
+    taskList.insertBefore(taskItem, addTask);
+
+    input.value = '';
+
+    completeButton.addEventListener('click', () => {
+      const projectCard = taskItem.closest('.project-card');
+
+      taskItem.classList.add('completed');
+      completeButton.textContent = 'Completed';
+      completeButton.disabled = true;
+
+      const tasks = projectCard.querySelectorAll('.task-item');
+      const completedTasks =
+        projectCard.querySelectorAll('.task-item.completed');
+
+      if (tasks.length === completedTasks.length) {
+        projectCard.querySelector('.project-status').textContent = 'Completed';
+      }
+    });
+  });
+});
+const taskFilter = document.getElementById('taskFilter');
+
+taskFilter.addEventListener('change', () => {
+  const filter = taskFilter.value;
+
+  document.querySelectorAll('.task-item').forEach(task => {
+    const isCompleted = task.classList.contains('completed');
+
+    if (filter === 'all') {
+      task.style.display = '';
+    } else if (filter === 'completed') {
+      task.style.display = isCompleted ? '' : 'none';
+    } else {
+      task.style.display = isCompleted ? 'none' : '';
+    }
+  });
+});
+const projectActionButtons = document.querySelectorAll('.project-action');
+
+projectActionButtons.forEach(button => {
+  button.addEventListener('click', () => {
+    const card = button.closest('.project-card');
+
+    const projectName = card.querySelector('h3').textContent;
+    const projectStatus = card.querySelector('.project-status').textContent;
+
+    workspaceTitle.textContent = projectName;
+    workspaceStatus.textContent = projectStatus;
+
+    workspaceDetails.textContent =
+      'Manage your collaboration and work on the selected project.';
+
+    projectWorkspace.style.display = 'block';
+
+    projectWorkspace.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start'
+    });
+
+    if (projectStatus.trim() === 'Completed') {
+      completeProject.textContent = 'Project Completed';
+      completeProject.disabled = true;
+      projectProgressFill.style.width = '100%';
+      projectProgressText.textContent = 'Project completed.';
+    } else if (projectStatus.trim() === 'Planning') {
+      completeProject.textContent = 'Mark as Complete';
+      completeProject.disabled = false;
+      projectProgressFill.style.width = '25%';
+      projectProgressText.textContent =
+        'Project is currently in the planning stage.';
+    } else {
+      completeProject.textContent = 'Mark as Complete';
+      completeProject.disabled = false;
+      projectProgressFill.style.width = '50%';
+      projectProgressText.textContent =
+        'Project is currently in progress.';
+    }
+
+    notesList.innerHTML = '<p>No project notes added yet.</p>';
+  });
 });
 </script>
 </body>
