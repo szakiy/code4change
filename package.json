@@ -1,6 +1,7 @@
 {
   "name": "code4change",
   "version": "1.0.0",
+<<<<<<< HEAD
   "description": "",
   "main": "index.js",
   "scripts": {
@@ -9,10 +10,17 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/szakiy/code4change.git"
+=======
+  "description": "Full-stack Netlify Serverless + Supabase app for Code4Change",
+  "main": "index.js",
+  "scripts": {
+    "dev": "netlify dev"
+>>>>>>> 2b0e1b37ae25f4aa41129bde6c7ee519edf25b42
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
+<<<<<<< HEAD
   "type": "commonjs",
   "bugs": {
     "url": "https://github.com/szakiy/code4change/issues"
@@ -21,5 +29,10 @@
   "dependencies": {
     "dotenv": "^17.4.2",
     "pg": "^8.23.0"
+=======
+  "dependencies": {
+    "dotenv": "^16.4.5",
+    "pg": "^8.11.5"
+>>>>>>> 2b0e1b37ae25f4aa41129bde6c7ee519edf25b42
   }
 }
