@@ -1874,7 +1874,17 @@
     </div>
 
   </div>
+<div class="progress-details" id="progressDetails">
 
+  <h3 id="progressDetailsTitle">Select a Project</h3>
+
+  <p id="progressDetailsText">
+    Select a project above to view its current progress.
+  </p>
+<div class="progress-bar-container">
+  <div class="progress-bar" id="progressBar"></div>
+</div>
+</div>
 </div>
     <div class="feature-card">
       <h3>Intelligent Collaboration</h3>
@@ -2304,13 +2314,49 @@ impactDetailsText.after(projectList);
 });
 const progressButtons = document.querySelectorAll('.progress-action');
 
+const progressDetailsTitle =
+  document.getElementById('progressDetailsTitle');
+
+const progressDetailsText =
+  document.getElementById('progressDetailsText');
+const progressBar =
+  document.getElementById('progressBar');
+const progressDescriptions = {
+  'Waste Management in Urban Areas':
+    'Currently focused on research, solution development, and preparation for testing.',
+
+  'Improving Digital Education':
+    'Currently focused on identifying accessibility challenges and researching possible digital learning solutions.',
+
+  'Smart Water Management':
+    'Currently focused on researching water monitoring technologies and developing the solution concept.'
+};
+
 progressButtons.forEach(button => {
   button.addEventListener('click', () => {
     const progressCard = button.closest('.progress-card');
-    const projectTitle = progressCard.querySelector('h3').textContent;
-    const status = progressCard.querySelector('.progress-status').textContent;
 
-    alert(`${projectTitle} — Status: ${status}`);
+    const projectTitle =
+      progressCard.querySelector('h3').textContent;
+
+    const status =
+      progressCard.querySelector('.progress-status').textContent;
+
+    progressDetailsTitle.textContent = projectTitle;
+
+    progressDetailsText.textContent =
+      `${status} — ${progressDescriptions[projectTitle]}`;
+if (status.trim() === 'Planning') {
+  progressBar.style.width = '25%';
+} else if (status.trim() === 'Completed') {
+  progressBar.style.width = '100%';
+} else {
+  progressBar.style.width = '50%';
+}
+    document.getElementById('progressDetails').scrollIntoView({
+      behavior: 'smooth',
+      block: 'nearest'
+    });
   });
 });
 const challengeForm = document.querySelector('#challengeForm form');
