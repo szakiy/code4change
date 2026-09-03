@@ -1,111 +1,2582 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - Code4Change</title>
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Code4Change</title>
+  <style>
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  :root {
+  --navy: #071426;
+  --navy-light: #0b1f3a;
+  --blue: #163d6b;
+  --blue-dark: #0b2a4a;
+  --blue-light: #eaf2fb;
+  --sky: #315f8f;
+
+  --white: #ffffff;
+  --page: #eef2f7;
+  --card: #ffffff;
+  --soft: #f6f8fb;
+  --border: #d6dee9;
+
+  --text: #172033;
+  --muted: #64748b;
+
+  --shadow: 0 8px 24px rgba(7, 20, 38, 0.08);
+  --shadow-hover: 0 14px 30px rgba(7, 20, 38, 0.14);
+
+  --radius: 12px;
+}
+
+  body {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+      Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.6;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    color: var(--text);
+    background: var(--page);
+  }
+
+  /* ================================
+     NAVBAR
+  ================================= */
+
+  .top-navbar {
+  background: linear-gradient(135deg, #071426, #0b1f3a);
+  color: var(--white);
+  padding: 0.6rem 2rem;
+  box-shadow: 0 4px 16px rgba(7, 20, 38, 0.18);
+  position: relative;
+}
+
+  .nav-container {
+  max-width: 1200px;
+  height: 76px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+  .logo {
+  display: flex;
+  align-items: center;
+}
+
+.logo img {
+  height: 78px;
+  width: 78px;
+  object-fit: contain;
+  display: block;
+}
+
+  .mobile-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--white);
+    font-size: 1.5rem;
+    cursor: pointer;
+  }
+
+  .nav-menu {
+    display: flex;
+    list-style: none;
+    gap: 0.5rem;
+  }
+
+  .nav-item {
+    position: relative;
+  }
+
+  .nav-title {
+    color: #dbeafe;
+    padding: 0.6rem 0.85rem;
+    cursor: pointer;
+    display: block;
+    font-weight: 600;
+    border-radius: 8px;
+    transition: background 0.2s ease, color 0.2s ease;
+  }
+
+  .nav-title:hover {
+    color: var(--white);
+    background: rgba(37, 99, 235, 0.2);
+  }
+
+  /* Dropdown */
+
+  .dropdown {
+    display: none;
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    left: 0;
+    background: var(--navy-light);
+    min-width: 210px;
+    border-radius: 10px;
+    border: 1px solid #263650;
+    box-shadow: 0 14px 30px rgba(0, 0, 0, 0.25);
+    z-index: 100;
+    list-style: none;
+    padding: 0.5rem;
+    overflow: hidden;
+  }
+
+  .nav-item:hover .dropdown {
+    display: block;
+  }
+
+  .dropdown-item a {
+    color: #cbd5e1;
+    padding: 0.7rem 0.9rem;
+    display: block;
+    text-decoration: none;
+    font-size: 0.95rem;
+    border-radius: 7px;
+    transition: background 0.2s ease, color 0.2s ease;
+  }
+
+  .dropdown-item a:hover {
+    background: var(--blue);
+    color: var(--white);
+  }
+
+  /* ================================
+     MAIN CONTENT
+  ================================= */
+
+  .content-section {
+    flex: 1;
+    background:
+      radial-gradient(circle at top right, rgba(37, 99, 235, 0.08), transparent 30%),
+      var(--page);
+    padding: 3rem 1.5rem;
+  }
+
+  .content-card,
+  .dashboard-header,
+  .challenge-form,
+  .explore-section,
+  .ai-analysis-section,
+  .partners-section,
+  .collaborations-section,
+  .projects-section,
+  .impact-dashboard,
+  .progress-section,
+  .project-workspace {
+    max-width: 1000px;
+    margin: 2rem auto;
+    background: var(--card);
+    padding: 2.5rem;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+  }
+
+  /* ================================
+     DASHBOARD HEADER
+  ================================= */
+
+  .dashboard-header {
+    padding: 3rem;
+    border-top: 4px solid var(--blue);
+    background:
+      linear-gradient(135deg, #ffffff 0%, #f8fbff 100%);
+  }
+
+  .dashboard-header h1 {
+    font-size: clamp(2rem, 4vw, 2.8rem);
+    color: var(--navy);
+    margin-bottom: 0.8rem;
+    letter-spacing: -0.5px;
+  }
+
+  .dashboard-header p {
+    font-size: 1.08rem;
+    color: var(--muted);
+    max-width: 720px;
+  }
+
+  /* ================================
+     GENERAL HEADINGS
+  ================================= */
+
+  .section-heading {
+    margin-bottom: 2rem;
+  }
+
+  .section-heading h2,
+  .dashboard-section h2 {
+    color: var(--navy);
+    font-size: 1.85rem;
+    margin-bottom: 0.55rem;
+    letter-spacing: -0.3px;
+  }
+
+  .section-heading h2::after {
+    content: "";
+    display: block;
+    width: 42px;
+    height: 3px;
+    background: var(--blue);
+    border-radius: 3px;
+    margin-top: 0.65rem;
+  }
+
+  .section-heading p,
+  .dashboard-section p {
+    color: var(--muted);
+  }
+
+  /* ================================
+     FEATURE CARDS
+  ================================= */
+
+  .dashboard-section {
+    max-width: 1000px;
+    margin: 0 auto;
+  }
+
+  .feature-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.25rem;
+  }
+
+  .feature-card {
+    background: var(--card);
+    padding: 1.5rem;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    transition: transform 0.25s ease, box-shadow 0.25s ease,
+      border-color 0.25s ease;
+  }
+
+  .feature-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-hover);
+    border-color: #93c5fd;
+  }
+
+  .feature-card h3 {
+    color: var(--navy);
+    margin-bottom: 0.5rem;
+  }
+
+  .feature-card p {
+    color: var(--muted);
+  }
+
+  /* ================================
+     FORMS
+  ================================= */
+
+  .challenge-form h2 {
+    color: var(--navy);
+    font-size: 1.85rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .challenge-form form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+  }
+
+  .challenge-form label,
+  .ai-input-area label {
+    color: var(--navy);
+    font-weight: 700;
+    margin-top: 0.5rem;
+  }
+
+  .challenge-form input,
+  .challenge-form select,
+  .challenge-form textarea,
+  .ai-input-area select,
+  .task-input,
+  .partner-filter select {
+    width: 100%;
+    padding: 0.8rem 0.9rem;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    background: var(--white);
+    color: var(--text);
+    font-family: inherit;
+    font-size: 1rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .challenge-form input:focus,
+  .challenge-form select:focus,
+  .challenge-form textarea:focus,
+  .ai-input-area select:focus,
+  .task-input:focus,
+  .partner-filter select:focus {
+    outline: none;
+    border-color: var(--blue);
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.12);
+  }
+
+  /* ================================
+     BUTTON SYSTEM
+  ================================= */
+
+  .challenge-form button,
+  .ai-input-area button,
+  .view-challenge,
+  .join-challenge,
+  .connect-partner,
+  .open-project,
+  .project-action,
+  .progress-action,
+  .add-task-button {
+    padding: 0.7rem 1.15rem;
+    background: var(--blue);
+    color: var(--white);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    font-weight: 700;
+    transition: background 0.2s ease, transform 0.2s ease,
+      box-shadow 0.2s ease;
+  }
+
+  .challenge-form button,
+  .ai-input-area button {
+    margin-top: 1rem;
+  }
+
+  .challenge-form button:hover,
+  .ai-input-area button:hover,
+  .view-challenge:hover,
+  .join-challenge:hover,
+  .connect-partner:hover,
+  .open-project:hover,
+  .project-action:hover,
+  .progress-action:hover,
+  .add-task-button:hover {
+    background: var(--blue-dark);
+    transform: translateY(-1px);
+    box-shadow: 0 5px 12px rgba(37, 99, 235, 0.25);
+  }
+
+  /* ================================
+     EXPLORE CHALLENGES
+  ================================= */
+
+  .challenge-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+
+  .challenge-card {
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    background: var(--soft);
+    transition: transform 0.25s ease, box-shadow 0.25s ease,
+      border-color 0.25s ease;
+  }
+
+  .challenge-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-hover);
+    border-color: #93c5fd;
+  }
+
+  .challenge-category,
+  .partner-role,
+  .collaboration-status,
+  .project-status,
+  .impact-category,
+  .progress-status {
+    display: inline-block;
+    font-size: 0.78rem;
+    font-weight: 800;
+    color: var(--blue-dark);
+    background: var(--blue-light);
+    padding: 0.3rem 0.65rem;
+    border-radius: 999px;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
+    margin-bottom: 0.7rem;
+  }
+
+  .challenge-card h3,
+  .partner-card h3,
+  .collaboration-card h3,
+  .project-card h3,
+  .impact-card h3,
+  .progress-card h3 {
+    color: var(--navy);
+    margin-bottom: 0.7rem;
+  }
+
+  .challenge-card p,
+  .partner-card p,
+  .collaboration-card p,
+  .progress-card p {
+    color: var(--muted);
+    font-size: 0.95rem;
+    margin-bottom: 1rem;
+  }
+
+  /* ================================
+     CHALLENGE DETAILS
+  ================================= */
+
+  .challenge-details {
+    display: none;
+    max-width: 1000px;
+    margin: 2rem auto;
+    background: var(--card);
+    padding: 2.5rem;
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+  }
+
+  .back-button {
+    background: var(--blue-light);
+    border: none;
+    color: var(--blue-dark);
+    padding: 0.55rem 0.8rem;
+    border-radius: 7px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    margin-bottom: 2rem;
+  }
+
+  .back-button:hover {
+    background: #dbeafe;
+  }
+
+  .challenge-details h2 {
+    color: var(--navy);
+    font-size: 2rem;
+    margin: 0.7rem 0;
+  }
+
+  .challenge-details p {
+    color: var(--muted);
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  /* ================================
+     AI ANALYSIS
+  ================================= */
+
+  .ai-input-area {
+    margin-bottom: 2rem;
+  }
+
+  .ai-input-area select {
+    margin-top: 0.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .analysis-card {
+    background: var(--soft);
+    border: 1px solid var(--border);
+    border-left: 4px solid var(--blue);
+    border-radius: 10px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .analysis-card h3 {
+    color: var(--navy);
+    margin-bottom: 0.7rem;
+  }
+
+  .analysis-card p,
+  .analysis-card ul {
+    color: var(--muted);
+  }
+
+  .analysis-card ul {
+    padding-left: 1.2rem;
+  }
+
+  .analysis-card li {
+    margin-bottom: 0.4rem;
+  }
+
+  .analysis-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+
+  .analysis-grid .analysis-card {
+    margin-bottom: 0;
+  }
+/* ================================
+     PARTNERS
+  ================================= */
+
+  .partner-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+
+  .partner-filter {
+    display: flex;
+    align-items: end;
+    gap: 1rem;
+    margin-bottom: 2rem;
+    padding: 1.25rem;
+    background: var(--soft);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+  }
+
+  .partner-select {
+    flex: 1;
+  }
+
+  .partner-filter label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+  }
+
+  .partner-filter button {
+    padding: 0.75rem 1.25rem;
+    background: var(--blue);
+    color: var(--white);
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 700;
+  }
+
+  .partner-filter button:hover {
+    background: var(--blue-dark);
+  }
+
+  .partner-filter button:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+
+  .partner-card {
+    display: none;
+    background: var(--soft);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  .partner-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-hover);
+  }
+
+  .skill-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-bottom: 1.2rem;
+  }
+
+  .skill-list span {
+    background: #e0ecff;
+    color: #1e40af;
+    padding: 0.35rem 0.65rem;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 700;
+  }
+
+  /* ================================
+     COLLABORATIONS
+  ================================= */
+
+  .collaboration-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+
+  .collaboration-card {
+    background: var(--soft);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  .collaboration-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-hover);
+  }
+
+  /* ================================
+     PROJECTS & TASKS
+  ================================= */
+
+  .project-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .project-card {
+    background: var(--soft);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+
+  .project-card:hover {
+    border-color: #93c5fd;
+    box-shadow: var(--shadow);
+  }
+
+  .project-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .task-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+  }
+
+  .task-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.85rem 1rem;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--muted);
+    transition: border-color 0.2s ease;
+  }
+
+  .task-item:hover {
+    border-color: #93c5fd;
+  }
+
+  .task-toggle {
+    padding: 0.5rem 0.8rem;
+    background: var(--navy);
+    color: var(--white);
+    border: none;
+    border-radius: 7px;
+    cursor: pointer;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  .task-toggle:hover {
+    background: var(--blue);
+  }
+
+  .task-toggle:disabled {
+    cursor: default;
+    opacity: 0.7;
+  }
+
+  .task-item.completed span:first-child {
+    text-decoration: line-through;
+    opacity: 0.55;
+  }
+
+  .add-task {
+    display: flex;
+    gap: 0.75rem;
+    margin-top: 1rem;
+  }
+
+  .add-task-button {
+    white-space: nowrap;
+  }
+
+  /* ================================
+     PROJECT WORKSPACE
+  ================================= */
+
+  .project-workspace {
+    border-top: 4px solid var(--blue);
+  }
+
+  .workspace-card {
+    background: var(--soft);
+    padding: 1.5rem;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+  }
+
+  .workspace-card h3 {
+    margin: 1rem 0 0.75rem;
+    color: var(--navy);
+  }
+
+  .workspace-card p {
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  .workspace-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+  }
+
+  .workspace-actions button,
+  #closeWorkspace {
+    padding: 0.7rem 1.1rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 700;
+    background: var(--blue);
+    color: var(--white);
+  }
+
+  .workspace-actions button:hover,
+  #closeWorkspace:hover {
+    background: var(--blue-dark);
+  }
+
+  .workspace-actions button:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
+
+  .project-progress {
+    margin-top: 1.5rem;
+    padding: 1.25rem;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+  }
+
+  .project-progress h3 {
+    margin-bottom: 1rem;
+  }
+
+  .progress-track {
+    width: 100%;
+    height: 10px;
+    background: #dbe4ef;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    width: 50%;
+    height: 100%;
+    border-radius: 10px;
+    background: linear-gradient(90deg, var(--blue), var(--sky));
+    transition: width 0.3s ease;
+  }
+
+  #projectProgressText {
+    margin-top: 0.75rem;
+    color: var(--muted);
+  }
+
+  .project-notes {
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border);
+  }
+
+  .project-notes h3 {
+    margin-bottom: 0.75rem;
+  }
+
+  #notesList p {
+    margin-bottom: 0.6rem;
+  }
+
+  #closeWorkspace {
+    margin-top: 1.5rem;
+    background: var(--navy);
+  }
+
+  /* ================================
+     IMPACT DASHBOARD
+  ================================= */
+
+  .impact-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+
+  .impact-card {
+    background: var(--soft);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    cursor: pointer;
+    transition: transform 0.25s ease, box-shadow 0.25s ease,
+      border-color 0.25s ease;
+  }
+
+  .impact-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--shadow-hover);
+    border-color: #60a5fa;
+  }
+
+  .impact-details {
+    margin-top: 1.5rem;
+    padding: 1.5rem;
+    background: var(--blue-light);
+    border: 1px solid #bfdbfe;
+    border-left: 4px solid var(--blue);
+    border-radius: 10px;
+  }
+
+  .impact-details h3 {
+    color: var(--navy);
+    margin-bottom: 0.75rem;
+  }
+
+  .impact-details p {
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  #impactProjectList {
+    margin-top: 1rem;
+    padding-left: 1.2rem;
+    color: #334155;
+  }
+
+  #impactProjectList li {
+    margin-bottom: 0.45rem;
+  }
+/* ================================
+     PROGRESS TRACKING
+  ================================= */
+
+  .progress-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .progress-card {
+    background: var(--soft);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+  }
+
+  .progress-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-hover);
+  }
+
+  .progress-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-bottom: 0.8rem;
+  }
+
+  .progress-details {
+    margin-top: 1.5rem;
+    padding: 1.5rem;
+    background: var(--blue-light);
+    border: 1px solid #bfdbfe;
+    border-left: 4px solid var(--blue);
+    border-radius: 10px;
+  }
+
+  .progress-details h3 {
+    color: var(--navy);
+    margin-bottom: 0.7rem;
+  }
+
+  .progress-details p {
+    color: var(--muted);
+  }
+
+  .progress-bar-container {
+    width: 100%;
+    height: 10px;
+    background: #dbe4ef;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top: 1.25rem;
+  }
+
+  .progress-bar {
+    width: 0;
+    height: 100%;
+    border-radius: 10px;
+    background: linear-gradient(90deg, #0b1f3a, #315f8f);
+    transition: width 0.4s ease;
+  }
+
+  /* ================================
+     MOBILE
+  ================================= */
+
+  @media (max-width: 768px) {
+
+    .top-navbar {
+      padding: 1rem 1.25rem;
+    }
+
+    .mobile-toggle {
+      display: block;
+    }
+
+    .nav-menu {
+      display: none;
+      flex-direction: column;
+      width: 100%;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background: var(--navy);
+      padding: 1rem 0;
+      gap: 0;
+    }
+
+    .nav-menu.active {
+      display: flex;
+    }
+
+    .dropdown {
+      position: static;
+      display: block;
+      background: var(--navy-light);
+      box-shadow: none;
+      border: none;
+      border-radius: 0;
+      padding-left: 1rem;
+    }
+
+    .nav-title {
+      padding: 0.75rem 1.5rem;
+    }
+
+    .dropdown-item a {
+      padding: 0.55rem 1.5rem;
+    }
+
+    .content-section {
+      padding: 1.5rem 1rem;
+    }
+
+    .content-card,
+    .dashboard-header,
+    .challenge-form,
+    .explore-section,
+    .ai-analysis-section,
+    .partners-section,
+    .collaborations-section,
+    .projects-section,
+    .impact-dashboard,
+    .progress-section,
+    .project-workspace {
+      padding: 1.5rem;
+      margin: 1rem auto;
+    }
+
+    .dashboard-header {
+      padding: 2rem 1.5rem;
+    }
+
+    .feature-grid,
+    .challenge-grid,
+    .analysis-grid,
+    .partner-grid,
+    .collaboration-grid,
+    .impact-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .project-header,
+    .progress-header {
+      flex-direction: column;
+    }
+
+    .task-item {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .task-toggle,
+    .project-action,
+    .progress-action {
+      width: 100%;
+    }
+
+    .partner-filter,
+    .add-task {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .partner-filter button,
+    .add-task-button {
+      width: 100%;
+    }
+
+    .workspace-actions {
+      flex-direction: column;
+    }
+
+    .workspace-actions button,
+    #closeWorkspace {
+      width: 100%;
+    }
+  }
+</style>
+  </style>
 </head>
-
 <body>
-
-    <header class="top-navbar">
-        <div class="nav-container">
-            <div class="logo">
+  <header class="top-navbar">
+    <div class="nav-container">
+      <div class="logo">
   <img src="public/code4change%20logo.png" alt="Code4Change">
 </div>
-            <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle Menu">☰</button>
+      <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle Menu">☰</button>
+      
+      <ul class="nav-menu" id="navMenu">
 
-            <ul class="nav-menu" id="navMenu">
-                <li class="nav-item">
-                    <span class="nav-title">Industry Section</span>
-                    <ul class="dropdown">
-                        <li class="dropdown-item">
-                            <a href="#" class="sub-option" data-view="ideas">Ideas Board</a>
-                        </li>
-                        <li class="dropdown-item">
-                            <a href="#" class="sub-option" data-view="undefined1"
-                                data-title="Undefined option 1">Undefined option 1</a>
-                        </li>
-                        <li class="dropdown-item">
-                            <a href="#" class="sub-option" data-view="undefined2"
-                                data-title="Undefined option 2">Undefined option 2</a>
-                        </li>
-                    </ul>
-                </li>
+  <li class="nav-item">
+    <span class="nav-title">Challenges</span>
+    <ul class="dropdown">
+      <li class="dropdown-item">
+        <a href="#" class="sub-option" data-title="Submit a Challenge">
+          Submit a Challenge
+        </a>
+      </li>
+      <li class="dropdown-item">
+        <a href="#" class="sub-option" data-title="Explore Challenges">
+          Explore Challenges
+        </a>
+      </li>
+      <li class="dropdown-item">
+        <a href="#" class="sub-option" data-title="My Challenges">
+          My Challenges
+        </a>
+      </li>
+    </ul>
+  </li>
 
-                <li class="nav-item">
-                    <span class="nav-title">Ongoing Issues</span>
-                    <ul class="dropdown">
-                        <li class="dropdown-item">
-                            <a href="#" class="sub-option" data-view="undefined3"
-                                data-title="Undefined option 3">Undefined option 3</a>
-                        </li>
-                        <li class="dropdown-item">
-                            <a href="#" class="sub-option" data-view="undefined4"
-                                data-title="Undefined option 4">Undefined option 4</a>
-                        </li>
-                    </ul>
-                </li>
-                
-                <li class="nav-item">
-                    <span class="nav-title">Progress</span>
-                    <ul class="dropdown">
-                        <li class="dropdown-item">
-                            <a href="#" class="sub-option" data-view="undefined5"
-                                data-title="Undefined option 5">Undefined option 5</a>
-                        </li>
-                        <li class="dropdown-item">
-                            <a href="#" class="sub-option" data-view="undefined6"
-                                data-title="Undefined option 6">Undefined option 6</a>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
+  <li class="nav-item">
+    <span class="nav-title">Intelligence</span>
+    <ul class="dropdown">
+      <li class="dropdown-item">
+        <a href="#" class="sub-option" data-title="AI Challenge Analysis">
+          AI Challenge Analysis
+        </a>
+      </li>
+      <li class="dropdown-item">
+        <a href="#" class="sub-option" data-title="Recommended Partners">
+          Recommended Partners
+        </a>
+      </li>
+    </ul>
+  </li>
+
+  <li class="nav-item">
+    <span class="nav-title">Collaboration</span>
+    <ul class="dropdown">
+      <li class="dropdown-item">
+        <a href="#" class="sub-option" data-title="My Collaborations">
+          My Collaborations
+        </a>
+      </li>
+      <li class="dropdown-item">
+        <a href="#" class="sub-option" data-title="Projects & Tasks">
+          Projects & Tasks
+        </a>
+      </li>
+    </ul>
+  </li>
+
+  <li class="nav-item">
+    <span class="nav-title">Impact</span>
+    <ul class="dropdown">
+      <li class="dropdown-item">
+        <a href="#" class="sub-option" data-title="Impact Dashboard">
+          Impact Dashboard
+        </a>
+      </li>
+      <li class="dropdown-item">
+        <a href="#" class="sub-option" data-title="Progress Tracking">
+          Progress Tracking
+        </a>
+      </li>
+    </ul>
+  </li>
+
+</ul>
+    </div>
+  </header>
+
+  <main class="content-section">
+
+  <div class="dashboard-header">
+    <h1>Welcome to Code4Change</h1>
+    <p>
+      A platform to discover real-world challenges, collaborate on solutions,
+      and track the impact of your projects.
+    </p>
+  </div>
+  <div class="challenge-form" id="challengeForm">
+  <h2>Submit a Challenge</h2>
+
+  <form>
+    <label for="challengeTitle">Challenge Title</label>
+    <input
+      type="text"
+      id="challengeTitle"
+      placeholder="Enter challenge title"
+      required
+    >
+
+    <label for="category">Industry / Category</label>
+    <select id="category" required>
+      <option value="">Select a category</option>
+      <option value="environment">Environment</option>
+      <option value="education">Education</option>
+      <option value="healthcare">Healthcare</option>
+      <option value="technology">Technology</option>
+      <option value="social">Social Impact</option>
+    </select>
+
+    <label for="description">Problem Description</label>
+    <textarea
+      id="description"
+      rows="5"
+      placeholder="Describe the real-world problem..."
+      required
+    ></textarea>
+
+    <label for="outcome">Expected Outcome</label>
+    <textarea
+      id="outcome"
+      rows="4"
+      placeholder="What outcome or solution are you expecting?"
+      required
+    ></textarea>
+
+    <button type="submit">Submit Challenge</button>
+  </form>
+</div>
+<div class="explore-section" id="exploreChallenges">
+
+  <div class="section-heading">
+    <h2>Explore Challenges</h2>
+    <p>
+      Discover real-world challenges and explore opportunities to create meaningful solutions.
+    </p>
+  </div>
+
+  <div class="challenge-grid">
+
+    <div class="challenge-card">
+      <span class="challenge-category">Environment</span>
+      <h3>Waste Management in Urban Areas</h3>
+      <p>
+        Find innovative ways to improve waste collection, segregation,
+        and recycling in growing cities.
+      </p>
+      <button class="view-challenge">View Challenge</button>
+    </div>
+
+    <div class="challenge-card">
+      <span class="challenge-category">Education</span>
+      <h3>Improving Digital Education</h3>
+      <p>
+        Develop solutions that make quality digital learning more accessible
+        to students.
+      </p>
+      <button class="view-challenge">View Challenge</button>
+    </div>
+
+    <div class="challenge-card">
+      <span class="challenge-category">Water</span>
+      <h3>Smart Water Management</h3>
+      <p>
+        Explore technology-driven approaches to reduce water wastage
+        and improve resource management.
+      </p>
+      <button class="view-challenge">View Challenge</button>
+    </div>
+
+    <div class="challenge-card">
+      <span class="challenge-category">Healthcare</span>
+      <h3>Healthcare Accessibility</h3>
+      <p>
+        Identify ways technology can help communities access essential
+        healthcare services.
+      </p>
+      <button class="view-challenge">View Challenge</button>
+    </div>
+
+  </div>
+
+</div>
+<div class="ai-analysis-section" id="aiAnalysis">
+
+  <div class="section-heading">
+    <h2>AI Challenge Analysis</h2>
+    <p>
+      Use AI-powered insights to understand a challenge and identify possible solution areas.
+    </p>
+  </div>
+  <div class="ai-input-area">
+
+  <label for="analysisChallenge">Select a Challenge</label>
+
+  <select id="analysisChallenge">
+    <option value="">Choose a challenge</option>
+    <option value="Waste Management in Urban Areas">
+      Waste Management in Urban Areas
+    </option>
+    <option value="Improving Digital Education">
+      Improving Digital Education
+    </option>
+    <option value="Smart Water Management">
+      Smart Water Management
+    </option>
+    <option value="Healthcare Accessibility">
+      Healthcare Accessibility
+    </option>
+  </select>
+
+  <button type="button" id="analyzeChallenge">
+    Analyze Challenge
+  </button>
+
+</div>
+
+  <div class="analysis-card">
+    <h3>Challenge Summary</h3>
+    <p id="aiSummary">
+      Select a challenge to generate an AI-powered summary.
+    </p>
+  </div>
+
+  <div class="analysis-grid">
+
+    <div class="analysis-card">
+      <h3>Key Problems</h3>
+      <ul id="keyProblems">
+        <li>Identify the main problem</li>
+        <li>Understand the affected users</li>
+        <li>Determine the major constraints</li>
+      </ul>
+    </div>
+
+    <div class="analysis-card">
+      <h3>Suggested Solution Areas</h3>
+      <ul id="solutionAreas">
+        <li>Technology-based solutions</li>
+        <li>Community participation</li>
+        <li>Data-driven approaches</li>
+      </ul>
+    </div>
+
+    <div class="analysis-card">
+      <h3>Required Skills</h3>
+      <ul id="requiredSkills">
+        <li>Problem solving</li>
+        <li>Technology development</li>
+        <li>Project collaboration</li>
+      </ul>
+    </div>
+
+    <div class="analysis-card">
+      <h3>Potential Impact</h3>
+      <p id="potentialImpact">
+        AI analysis will identify the potential social and real-world impact of the solution.
+      </p>
+    </div>
+
+  </div>
+
+</div>
+  <div class="dashboard-section">
+
+  <h2>Platform Workflow</h2>
+
+  <div class="feature-grid">
+
+    <div class="feature-card">
+      <h3>Challenge Submission</h3>
+      <p>
+        Submit real-world problems and challenges that require innovative solutions.
+      </p>
+    </div>
+
+    <div class="feature-card">
+      <h3>AI Challenge Intelligence</h3>
+      <p>
+        Analyze, summarize, and understand complex challenges using AI-powered insights.
+      </p>
+    </div>
+    
+<div class="partners-section" id="recommendedPartners">
+
+  <div class="section-heading">
+    <h2>Recommended Partners</h2>
+    <p>
+      Find contributors with skills that match the requirements of your challenge.
+    </p>
+  </div>
+
+  <div class="partner-grid">
+
+    <div class="partner-card" data-skill="technology">
+      <span class="partner-role">Frontend Development</span>
+
+      <h3>Frontend Skills</h3>
+
+      <p>
+        Contributors experienced in building responsive and user-friendly interfaces.
+      </p>
+
+      <div class="skill-list">
+        <span>HTML</span>
+        <span>CSS</span>
+        <span>JavaScript</span>
+      </div>
+
+      <button class="connect-partner">
+        Find Contributors
+      </button>
+    </div>
+<div class="partner-filter">
+  <label for="partnerSkill">Find collaborators by skill</label>
+
+  <select id="partnerSkill">
+    <option value="">Choose a skill area</option>
+    <option value="technology">Technology Development</option>
+    <option value="design">UI/UX Design</option>
+    <option value="data">Data Analysis</option>
+    <option value="community">Community Engagement</option>
+  </select>
+
+  <button type="button" id="findPartners">
+    Find Matches
+  </button>
+</div>
+
+    <div class="partner-card" data-skill="technology">
+      <span class="partner-role">Backend Development</span>
+
+      <h3>Backend Skills</h3>
+
+      <p>
+        Contributors who can build APIs, databases, and server-side applications.
+      </p>
+
+      <div class="skill-list">
+        <span>Python</span>
+        <span>APIs</span>
+        <span>Databases</span>
+      </div>
+
+      <button class="connect-partner">
+        Find Contributors
+      </button>
+    </div>
+
+
+    <div class="partner-card" data-skill="data">
+      <span class="partner-role">AI & Data</span>
+
+      <h3>AI & Data Skills</h3>
+
+      <p>
+        Contributors experienced in analyzing data and developing intelligent solutions.
+      </p>
+
+      <div class="skill-list">
+        <span>Python</span>
+        <span>Data Analysis</span>
+        <span>Machine Learning</span>
+      </div>
+
+      <button class="connect-partner">
+        Find Contributors
+      </button>
+    </div>
+
+
+    <div class="partner-card" data-skill="design">
+      <span class="partner-role">Design</span>
+
+      <h3>UI/UX Skills</h3>
+
+      <p>
+        Contributors who can design accessible, intuitive, and engaging user experiences.
+      </p>
+
+      <div class="skill-list">
+        <span>UI Design</span>
+        <span>UX Research</span>
+        <span>Figma</span>
+      </div>
+
+      <button class="connect-partner">
+        Find Contributors
+      </button>
+    </div>
+
+  </div>
+
+</div>
+<div class="collaborations-section" id="myCollaborations">
+
+  <div class="section-heading">
+    <h2>My Collaborations</h2>
+    <p>
+      View and manage the challenges and projects you are currently working on.
+    </p>
+  </div>
+
+  <div class="collaboration-grid">
+
+    <div class="collaboration-card">
+
+      <span class="collaboration-status">In Progress</span>
+
+      <h3>Waste Management in Urban Areas</h3>
+
+      <p>
+        Developing an innovative approach to improve waste collection,
+        segregation, and recycling.
+      </p>
+
+      <button class="open-project">
+        Open Project
+      </button>
+
+    </div>
+
+
+    <div class="collaboration-card">
+
+      <span class="collaboration-status">Planning</span>
+
+      <h3>Improving Digital Education</h3>
+
+      <p>
+        Working on ideas to make quality digital learning more accessible
+        to students.
+      </p>
+
+      <button class="open-project">
+        Open Project
+      </button>
+
+    </div>
+
+
+    <div class="collaboration-card">
+
+      <span class="collaboration-status">In Progress</span>
+
+      <h3>Smart Water Management</h3>
+
+      <p>
+        Exploring technology-driven approaches to reduce water wastage
+        and improve resource management.
+      </p>
+
+      <button class="open-project">
+        Open Project
+      </button>
+
+    </div>
+
+  </div>
+
+</div>
+<div class="project-workspace" id="projectWorkspace" style="display: none;">
+
+  <div class="section-heading">
+    <h2 id="workspaceTitle">Project Workspace</h2>
+    <p id="workspaceDescription">
+      Manage your collaboration and work on the selected project.
+    </p>
+  </div>
+
+  <div class="workspace-card">
+
+    <span class="collaboration-status" id="workspaceStatus">
+      In Progress
+    </span>
+
+    <h3>Project Overview</h3>
+
+    <p id="workspaceDetails">
+      Select a project from My Collaborations to view its workspace.
+    </p>
+    <div class="project-progress">
+  <h3>Project Progress</h3>
+
+  <div class="progress-track">
+    <div class="progress-fill" id="projectProgressFill"></div>
+  </div>
+
+  <p id="projectProgressText">Project is currently in progress.</p>
+</div>
+    <div class="project-notes">
+  <h3>Project Notes</h3>
+  <div id="notesList">
+    <p>No project notes added yet.</p>
+  </div>
+</div>
+<div class="workspace-actions">
+
+  <button type="button" id="addNote">
+    Add Project Note
+  </button>
+
+  <button type="button" id="completeProject">
+    Mark as Complete
+  </button>
+
+</div>
+    <button type="button" id="closeWorkspace">
+      Close Project
+    </button>
+
+  </div>
+
+</div>
+<div class="projects-section" id="projectsTasks">
+
+  <div class="section-heading">
+    <h2>Projects & Tasks</h2>
+    <p>
+      Organize project work and keep track of the tasks involved in each collaboration.
+    </p>
+  </div>
+<div class="task-filter">
+  <label for="taskFilter">Filter Tasks</label>
+
+  <select id="taskFilter">
+    <option value="all">All Tasks</option>
+    <option value="pending">Pending</option>
+    <option value="completed">Completed</option>
+  </select>
+</div>
+  <div class="project-list">
+
+    <div class="project-card">
+
+      <div class="project-header">
+        <div>
+          <span class="project-status">Active</span>
+          <h3>Waste Management in Urban Areas</h3>
         </div>
-    </header>
 
-    <main class="content-section">
-        <div class="content-card">
-            <h1 id="contentHeading">Student Ideas Board</h1>
-            <p id="contentBody">Share, view, and update innovative project concepts below.</p>
+        <button class="project-action">
+          View Project
+        </button>
+      </div>
 
-            <div id="ideasAppView" class="app-view">
-                <section class="form-card">
-                    <h2 id="form-title">Submit a New Idea</h2>
-                    <form id="idea-form">
-                        <input type="hidden" id="idea-id" value="">
+      <div class="task-list">
 
-                        <div class="form-group">
-                            <label for="student-name">Student Name</label>
-                            <input type="text" id="student-name" placeholder="Enter full name" required>
-                        </div>
+       <div class="task-item">
+  <span>Research existing waste collection methods</span>
+  <button class="task-toggle" type="button">Mark Complete</button>
+</div>
 
-                        <div class="form-group">
-                            <label for="student-idea">Project Idea</label>
-                            <textarea id="student-idea" rows="4" placeholder="Describe the idea in detail..."
-                                required></textarea>
-                        </div>
-
-                        <div class="button-group">
-                            <button type="submit" id="submit-btn" class="btn btn-primary">Submit Idea</button>
-                            <button type="button" id="cancel-btn" class="btn btn-secondary hidden">Cancel Edit</button>
-                        </div>
-                    </form>
-                </section>
-
-                <section class="ideas-section">
-                    <h2>Submitted Ideas</h2>
-                    <div id="ideas-list" class="ideas-grid">
-                        <p class="loading-text">Loading ideas...</p>
-                    </div>
-                </section>
-            </div>
+        <div class="task-item">
+          <span>Identify possible technology solutions</span>
+          <button class="task-toggle" type="button">Mark Complete</button>
         </div>
-    </main>
 
-    <script src="script.js"></script>
+        <div class="task-item">
+          <span>Prepare solution proposal</span>
+          <button class="task-toggle" type="button">Mark Complete</button>
+        </div>
+<div class="add-task">
+  <input type="text" class="task-input" placeholder="Enter a new task">
+  <button type="button" class="add-task-button">Add Task</button>
+</div>
+      </div>
+
+    </div>
+
+
+    <div class="project-card">
+
+      <div class="project-header">
+        <div>
+          <span class="project-status">Planning</span>
+          <h3>Improving Digital Education</h3>
+        </div>
+
+        <button class="project-action">
+          View Project
+        </button>
+      </div>
+
+      <div class="task-list">
+
+        <div class="task-item">
+          <span>Identify accessibility challenges</span>
+          <button class="task-toggle" type="button">Mark Complete</button>
+        </div>
+
+        <div class="task-item">
+          <span>Research digital learning tools</span>
+          <button class="task-toggle" type="button">Mark Complete</button>
+        </div>
+
+        <div class="task-item">
+          <span>Develop solution concept</span>
+          <button class="task-toggle" type="button">Mark Complete</button>
+        </div>
+<div class="add-task">
+  <input type="text" class="task-input" placeholder="Enter a new task">
+  <button type="button" class="add-task-button">Add Task</button>
+</div>
+      </div>
+
+    </div>
+<div class="project-card">
+
+  <div class="project-header">
+    <div>
+      <span class="project-status">Active</span>
+      <h3>Smart Water Management</h3>
+    </div>
+
+    <button class="project-action" type="button">
+      View Project
+    </button>
+  </div>
+
+  <div class="task-list">
+
+    <div class="task-item">
+      <span>Identify major sources of water wastage</span>
+      <button class="task-toggle" type="button">Mark Complete</button>
+    </div>
+
+    <div class="task-item">
+      <span>Research water monitoring technologies</span>
+      <button class="task-toggle" type="button">Mark Complete</button>
+    </div>
+
+    <div class="task-item">
+      <span>Develop a water management solution concept</span>
+      <button class="task-toggle" type="button">Mark Complete</button>
+    </div>
+<div class="add-task">
+  <input type="text" class="task-input" placeholder="Enter a new task">
+  <button type="button" class="add-task-button">Add Task</button>
+</div>
+  </div>
+
+</div>
+  </div>
+
+</div>
+<div class="impact-dashboard" id="impactDashboard">
+
+  <div class="section-heading">
+    <h2>Impact Dashboard</h2>
+    <p>
+      Explore the real-world outcomes and areas of impact created through completed projects.
+    </p>
+  </div>
+
+  <div class="impact-grid">
+
+    <div class="impact-card">
+      <span class="impact-category">Environment</span>
+      <h3>Environmental Solutions</h3>
+      <p>
+        Projects focused on reducing waste, conserving resources,
+        and creating sustainable solutions.
+      </p>
+    </div>
+
+    <div class="impact-card">
+      <span class="impact-category">Education</span>
+      <h3>Education & Learning</h3>
+      <p>
+        Solutions designed to improve access to learning,
+        educational resources, and digital education.
+      </p>
+    </div>
+
+    <div class="impact-card">
+      <span class="impact-category">Healthcare</span>
+      <h3>Healthcare Accessibility</h3>
+      <p>
+        Projects focused on improving access to essential
+        healthcare information and services.
+      </p>
+    </div>
+
+    <div class="impact-card">
+      <span class="impact-category">Community</span>
+      <h3>Community Development</h3>
+      <p>
+        Initiatives that address local challenges and create
+        meaningful benefits for communities.
+      </p>
+    </div>
+
+          </div>
+    <div class="impact-details" id="impactDetails">
+
+  <h3 id="impactDetailsTitle">Select an Impact Area</h3>
+
+  <p id="impactDetailsText">
+    Select an impact area above to explore how projects can create meaningful outcomes.
+  </p>
+
+</div>
+</div>
+<div class="progress-section" id="progressTracking">
+
+  <div class="section-heading">
+    <h2>Progress Tracking</h2>
+    <p>
+      Monitor the current stage of your projects and keep track of important project activities.
+    </p>
+  </div>
+
+  <div class="progress-list">
+
+    <div class="progress-card">
+
+      <div class="progress-header">
+        <div>
+          <span class="progress-status">In Progress</span>
+          <h3>Waste Management in Urban Areas</h3>
+        </div>
+
+        <button class="progress-action">
+          View Progress
+        </button>
+      </div>
+
+      <p>
+        Track research, solution development, testing, and project activities.
+      </p>
+
+    </div>
+
+
+    <div class="progress-card">
+
+      <div class="progress-header">
+        <div>
+          <span class="progress-status">Planning</span>
+          <h3>Improving Digital Education</h3>
+        </div>
+
+        <button class="progress-action">
+          View Progress
+        </button>
+      </div>
+
+      <p>
+        Monitor planning activities, research, and development of the proposed solution.
+      </p>
+
+    </div>
+
+
+    <div class="progress-card">
+
+      <div class="progress-header">
+        <div>
+          <span class="progress-status">In Progress</span>
+          <h3>Smart Water Management</h3>
+        </div>
+
+        <button class="progress-action">
+          View Progress
+        </button>
+      </div>
+
+      <p>
+        Follow the development and testing of technology-driven water management solutions.
+      </p>
+
+    </div>
+
+  </div>
+<div class="progress-details" id="progressDetails">
+
+  <h3 id="progressDetailsTitle">Select a Project</h3>
+
+  <p id="progressDetailsText">
+    Select a project above to view its current progress.
+  </p>
+<div class="progress-bar-container">
+  <div class="progress-bar" id="progressBar"></div>
+</div>
+</div>
+</div>
+    <div class="feature-card">
+      <h3>Intelligent Collaboration</h3>
+      <p>
+        Connect with suitable contributors and work together on meaningful solutions.
+      </p>
+    </div>
+
+    <div class="feature-card">
+      <h3>Impact Tracking</h3>
+      <p>
+        Track solution progress and evaluate the real-world impact of completed projects.
+      </p>
+    </div>
+
+  </div>
+
+</div>
+
+  <div class="dashboard-section">
+    <h2>What you can do</h2>
+
+    <div class="feature-grid">
+
+      <div class="feature-card">
+        <h3>Submit a Challenge</h3>
+        <p>
+          Share a real-world problem that needs a solution.
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <h3>Explore Challenges</h3>
+        <p>
+          Discover challenges and find problems you can contribute to.
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <h3>Collaborate</h3>
+        <p>
+          Work with other contributors and manage your projects.
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <h3>Track Impact</h3>
+        <p>
+          Monitor project progress and understand the impact of your work.
+        </p>
+      </div>
+
+    </div>
+  </div>
+  <div class="challenge-details" id="challengeDetails">
+
+  <button class="back-button" id="backToChallenges">
+    ← Back to Challenges
+  </button>
+
+  <span class="challenge-category" id="detailCategory">
+    Environment
+  </span>
+
+  <h2 id="detailTitle">Challenge Title</h2>
+
+  <p id="detailDescription">
+    Challenge description will appear here.
+  </p>
+
+  <button class="join-challenge" id="joinChallenge">
+    Join Challenge
+  </button>
+
+</div>
+
+</main>
+    
+  <script>
+  const mobileToggle = document.getElementById('mobileToggle');
+  const navMenu = document.getElementById('navMenu');
+  const subOptions = document.querySelectorAll('.sub-option');
+
+  // Mobile menu toggle
+  mobileToggle.addEventListener('click', () => {
+    navMenu.classList.toggle('active');
+  });
+
+  // Handle menu options
+  subOptions.forEach(option => {
+  option.addEventListener('click', (event) => {
+    event.preventDefault();
+
+    const selectedOption = option.getAttribute('data-title');
+
+    if (selectedOption === 'Submit a Challenge') {
+  document.getElementById('challengeForm').scrollIntoView({
+    behavior: 'smooth'
+  });
+
+} else if (selectedOption === 'Explore Challenges') {
+  document.getElementById('exploreChallenges').scrollIntoView({
+    behavior: 'smooth'
+  });
+
+} else if (selectedOption === 'AI Challenge Analysis') {
+  document.getElementById('aiAnalysis').scrollIntoView({
+    behavior: 'smooth'
+  });
+} else if (selectedOption === 'Recommended Partners') {
+  document.getElementById('recommendedPartners').scrollIntoView({
+    behavior: 'smooth'
+  });
+ } else if (selectedOption === 'My Collaborations') {
+  document.getElementById('myCollaborations').scrollIntoView({
+    behavior: 'smooth'
+  });
+} else if (selectedOption === 'Projects & Tasks') {
+  document.getElementById('projectsTasks').scrollIntoView({
+    behavior: 'smooth'
+  });
+} else if (selectedOption === 'Impact Dashboard') {
+  document.getElementById('impactDashboard').scrollIntoView({
+    behavior: 'smooth'
+  });
+} else if (selectedOption === 'Progress Tracking') {
+  document.getElementById('progressTracking').scrollIntoView({
+    behavior: 'smooth'
+  });
+}else {
+  alert(`${selectedOption} selected`);
+}
+
+    navMenu.classList.remove('active');
+  });
+});
+const challengeCards = document.querySelectorAll('.challenge-card');
+const challengeDetails = document.getElementById('challengeDetails');
+const exploreChallenges = document.getElementById('exploreChallenges');
+
+const detailTitle = document.getElementById('detailTitle');
+const detailCategory = document.getElementById('detailCategory');
+const detailDescription = document.getElementById('detailDescription');
+
+const backToChallenges = document.getElementById('backToChallenges');
+const joinChallenge = document.getElementById('joinChallenge');
+joinChallenge.addEventListener('click', () => {
+  const challengeTitle =
+    document.getElementById('detailTitle').textContent;
+
+  joinChallenge.textContent = 'Joined';
+  joinChallenge.disabled = true;
+
+  alert(`You have joined "${challengeTitle}"!`);
+});
+
+challengeCards.forEach(card => {
+  const viewButton = card.querySelector('.view-challenge');
+
+  viewButton.addEventListener('click', () => {
+    const title = card.querySelector('h3').textContent;
+    const category = card.querySelector('.challenge-category').textContent;
+    const description = card.querySelector('p').textContent;
+
+    detailTitle.textContent = title;
+detailCategory.textContent = category;
+detailDescription.textContent = description;
+
+joinChallenge.textContent = 'Join Challenge';
+joinChallenge.disabled = false;
+
+exploreChallenges.style.display = 'none';
+    challengeDetails.style.display = 'block';
+
+    challengeDetails.scrollIntoView({
+      behavior: 'smooth'
+    });
+  });
+});
+
+backToChallenges.addEventListener('click', () => {
+  challengeDetails.style.display = 'none';
+  exploreChallenges.style.display = 'block';
+
+  exploreChallenges.scrollIntoView({
+    behavior: 'smooth'
+  });
+});
+const analysisChallenge = document.getElementById('analysisChallenge');
+const analyzeChallenge = document.getElementById('analyzeChallenge');
+analyzeChallenge.addEventListener('click', () => {
+  const selectedChallenge = analysisChallenge.value;
+
+  if (!selectedChallenge) {
+    alert('Please select a challenge first.');
+    return;
+  }
+
+  analyzeChallenge.textContent = 'Analyzing...';
+  analyzeChallenge.disabled = true;
+
+  const analysisData = {
+    "Waste Management in Urban Areas": {
+      summary: "Urban waste management can be improved by addressing inefficient collection, poor waste segregation, and limited community participation.",
+      problems: [
+        "Inefficient waste collection",
+        "Poor waste segregation",
+        "Limited community participation"
+      ],
+      solutions: [
+        "Smart waste collection systems",
+        "Waste segregation awareness",
+        "Data-driven collection planning"
+      ],
+      skills: [
+        "Web or mobile development",
+        "Data analysis",
+        "Community engagement"
+      ],
+      impact: "Better waste management can support cleaner communities, improve resource recovery, and encourage responsible waste disposal."
+    },
+
+    "Improving Digital Education": {
+      summary: "Digital education can be improved by making learning resources more accessible, engaging, and suitable for students with different learning needs.",
+      problems: [
+        "Limited access to digital learning resources",
+        "Difficulty maintaining student engagement",
+        "Different learning needs among students"
+      ],
+      solutions: [
+        "Accessible learning platforms",
+        "Interactive educational tools",
+        "Personalized learning approaches"
+      ],
+      skills: [
+        "Web development",
+        "UI/UX design",
+        "Educational technology"
+      ],
+      impact: "Improved digital education can make learning resources more accessible and create better learning experiences for students."
+    },
+
+    "Smart Water Management": {
+      summary: "Smart water management focuses on reducing unnecessary water usage, detecting problems early, and improving how water resources are monitored.",
+      problems: [
+        "Unnecessary water consumption",
+        "Difficulty detecting leaks",
+        "Limited monitoring of water usage"
+      ],
+      solutions: [
+        "Water monitoring systems",
+        "Leak detection technology",
+        "Usage analysis and alerts"
+      ],
+      skills: [
+        "IoT development",
+        "Data analysis",
+        "Software development"
+      ],
+      impact: "Smarter water management can help communities use water more efficiently and identify problems before they become larger issues."
+    },
+
+    "Healthcare Accessibility": {
+      summary: "Healthcare accessibility can be improved by reducing barriers that prevent people from finding information, services, and appropriate care.",
+      problems: [
+        "Limited access to healthcare services",
+        "Difficulty finding reliable information",
+        "Barriers to connecting people with appropriate care"
+      ],
+      solutions: [
+        "Healthcare information platforms",
+        "Service discovery tools",
+        "Digital communication systems"
+      ],
+      skills: [
+        "Web or mobile development",
+        "UI/UX design",
+        "Data management"
+      ],
+      impact: "Better healthcare accessibility can help people find relevant services and information more easily."
+    }
+  };
+
+  const data = analysisData[selectedChallenge];
+
+  document.getElementById('aiSummary').textContent = data.summary;
+
+  document.getElementById('keyProblems').innerHTML =
+    data.problems.map(problem => `<li>${problem}</li>`).join('');
+
+  document.getElementById('solutionAreas').innerHTML =
+    data.solutions.map(solution => `<li>${solution}</li>`).join('');
+
+  document.getElementById('requiredSkills').innerHTML =
+    data.skills.map(skill => `<li>${skill}</li>`).join('');
+
+  document.getElementById('potentialImpact').textContent = data.impact;
+
+  setTimeout(() => {
+    analyzeChallenge.textContent = 'Analyze Challenge';
+    analyzeChallenge.disabled = false;
+  }, 800);
+});
+
+const connectButtons = document.querySelectorAll('.connect-partner');
+const partnerSkill = document.getElementById('partnerSkill');
+const findPartners = document.getElementById('findPartners');
+const partnerCards = document.querySelectorAll('.partner-card');
+
+findPartners.addEventListener('click', () => {
+  const selectedSkill = partnerSkill.value;
+
+  if (!selectedSkill) {
+    alert('Please select a skill area first.');
+    return;
+  }
+
+  let matchFound = false;
+
+  partnerCards.forEach(card => {
+    if (card.dataset.skill === selectedSkill) {
+      card.style.display = 'block';
+      matchFound = true;
+    } else {
+      card.style.display = 'none';
+    }
+  });
+
+  if (!matchFound) {
+    alert('No matching collaborators found.');
+  }
+});
+
+connectButtons.forEach(button => {
+  button.addEventListener('click', () => {
+    const card = button.closest('.partner-card');
+    const skillArea = card.querySelector('h3').textContent;
+
+    alert(`Finding contributors with ${skillArea}...`);
+  });
+});
+const projectButtons = document.querySelectorAll('.open-project');
+
+projectButtons.forEach(button => {
+  button.addEventListener('click', () => {
+    const project = button.closest('.collaboration-card');
+    const projectTitle = project.querySelector('h3').textContent;
+
+    alert(`Opening project: ${projectTitle}`);
+  });
+});
+
+const impactCards = document.querySelectorAll('.impact-card');
+
+const impactDetailsTitle =
+  document.getElementById('impactDetailsTitle');
+
+const impactDetailsText =
+  document.getElementById('impactDetailsText');
+
+const impactDescriptions = {
+  'Environmental Solutions': {
+    description:
+      'Explore projects that reduce waste, conserve resources, and support sustainable communities.',
+    projects: [
+      'Waste Management in Urban Areas',
+      'Smart Water Management'
+    ]
+  },
+
+  'Education & Learning': {
+    description:
+      'Explore projects that improve access to learning, educational resources, and digital education.',
+    projects: [
+      'Improving Digital Education'
+    ]
+  },
+
+  'Healthcare Accessibility': {
+    description:
+      'Explore projects that focus on making essential healthcare information and services more accessible.',
+    projects: [
+      'Healthcare Accessibility'
+    ]
+  },
+
+  'Community Development': {
+    description:
+      'Explore projects that address local challenges and create meaningful benefits for communities.',
+    projects: [
+      'Waste Management in Urban Areas',
+      'Improving Digital Education',
+      'Smart Water Management'
+    ]
+  }
+};
+
+impactCards.forEach(card => {
+  card.addEventListener('click', () => {
+    const impactArea = card.querySelector('h3').textContent;
+
+    const impactData = impactDescriptions[impactArea];
+
+impactDetailsTitle.textContent = impactArea;
+impactDetailsText.textContent = impactData.description;
+const projectList = document.createElement('ul');
+
+impactData.projects.forEach(project => {
+  const projectItem = document.createElement('li');
+  projectItem.textContent = project;
+  projectList.appendChild(projectItem);
+});
+
+const existingList = document.getElementById('impactProjectList');
+
+if (existingList) {
+  existingList.remove();
+}
+
+projectList.id = 'impactProjectList';
+impactDetailsText.after(projectList);
+    document.getElementById('impactDetails').scrollIntoView({
+      behavior: 'smooth',
+      block: 'nearest'
+    });
+  });
+});
+const progressButtons = document.querySelectorAll('.progress-action');
+
+const progressDetailsTitle =
+  document.getElementById('progressDetailsTitle');
+
+const progressDetailsText =
+  document.getElementById('progressDetailsText');
+const progressBar =
+  document.getElementById('progressBar');
+const progressDescriptions = {
+  'Waste Management in Urban Areas':
+    'Currently focused on research, solution development, and preparation for testing.',
+
+  'Improving Digital Education':
+    'Currently focused on identifying accessibility challenges and researching possible digital learning solutions.',
+
+  'Smart Water Management':
+    'Currently focused on researching water monitoring technologies and developing the solution concept.'
+};
+
+progressButtons.forEach(button => {
+  button.addEventListener('click', () => {
+    const progressCard = button.closest('.progress-card');
+
+    const projectTitle =
+      progressCard.querySelector('h3').textContent;
+
+    const status =
+      progressCard.querySelector('.progress-status').textContent;
+
+    progressDetailsTitle.textContent = projectTitle;
+
+    progressDetailsText.textContent =
+      `${status} — ${progressDescriptions[projectTitle]}`;
+if (status.trim() === 'Planning') {
+  progressBar.style.width = '25%';
+} else if (status.trim() === 'Completed') {
+  progressBar.style.width = '100%';
+} else {
+  progressBar.style.width = '50%';
+}
+    document.getElementById('progressDetails').scrollIntoView({
+      behavior: 'smooth',
+      block: 'nearest'
+    });
+  });
+});
+const challengeForm = document.querySelector('#challengeForm form');
+
+challengeForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+
+  const title = document.getElementById('challengeTitle').value.trim();
+  const category = document.getElementById('category').value;
+  const description = document.getElementById('description').value.trim();
+  const outcome = document.getElementById('outcome').value.trim();
+
+  if (!title || !category || !description || !outcome) {
+    alert('Please complete all fields.');
+    return;
+  }
+
+  const exploreGrid = document.querySelector('.challenge-grid');
+
+const challengeCard = document.createElement('div');
+challengeCard.className = 'challenge-card';
+
+challengeCard.innerHTML = `
+  <span class="challenge-category">${category}</span>
+  <h3>${title}</h3>
+  <p>${description}</p>
+  <button class="view-challenge">View Challenge</button>
+`;
+
+exploreGrid.appendChild(challengeCard);
+
+alert(`Challenge "${title}" submitted successfully!`);
+
+challengeForm.reset();
+});
+const openProjectButtons = document.querySelectorAll('.open-project');
+
+const projectWorkspace = document.getElementById('projectWorkspace');
+const workspaceTitle = document.getElementById('workspaceTitle');
+const workspaceDescription = document.getElementById('workspaceDescription');
+const workspaceStatus = document.getElementById('workspaceStatus');
+const workspaceDetails = document.getElementById('workspaceDetails');
+const projectProgressFill = document.getElementById('projectProgressFill');
+const projectProgressText = document.getElementById('projectProgressText');
+const completeProject = document.getElementById('completeProject');
+
+openProjectButtons.forEach(button => {
+  button.addEventListener('click', () => {
+    const card = button.closest('.collaboration-card');
+
+    const projectName = card.querySelector('h3').textContent;
+    const projectDescription = card.querySelector('p').textContent;
+    const projectStatus = card.querySelector('.collaboration-status').textContent;
+
+    workspaceTitle.textContent = projectName;
+    workspaceDescription.textContent =
+      'Manage your collaboration and work on the selected project.';
+    workspaceStatus.textContent = projectStatus;
+    completeProject.textContent = 'Mark as Complete';
+completeProject.disabled = false;
+    if (projectStatus.trim() === 'Completed') {
+  projectProgressFill.style.width = '100%';
+  projectProgressText.textContent = 'Project completed.';
+} else if (projectStatus.trim() === 'Planning') {
+  projectProgressFill.style.width = '25%';
+  projectProgressText.textContent = 'Project is currently in the planning stage.';
+} else {
+  projectProgressFill.style.width = '50%';
+  projectProgressText.textContent = 'Project is currently in progress.';
+}
+    workspaceDetails.textContent = projectDescription;
+notesList.innerHTML = '<p>No project notes added yet.</p>';
+    projectWorkspace.style.display = 'block';
+
+    projectWorkspace.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start'
+    });
+  });
+});
+const closeWorkspace = document.getElementById('closeWorkspace');
+
+closeWorkspace.addEventListener('click', () => {
+  projectWorkspace.style.display = 'none';
+});
+completeProject.addEventListener('click', () => {
+  workspaceStatus.textContent = 'Completed';
+  completeProject.textContent = 'Project Completed';
+  completeProject.disabled = true;
+
+  projectProgressFill.style.width = '100%';
+  projectProgressText.textContent = 'Project completed.';
+
+  const currentProject = [...openProjectButtons].find(button => {
+    const card = button.closest('.collaboration-card');
+    return card.querySelector('h3').textContent === workspaceTitle.textContent;
+  });
+
+  if (currentProject) {
+    const card = currentProject.closest('.collaboration-card');
+    card.querySelector('.collaboration-status').textContent = 'Completed';
+  }
+});
+const addNote = document.getElementById('addNote');
+const notesList = document.getElementById('notesList');
+
+addNote.addEventListener('click', () => {
+  const note = prompt('Enter a project note:');
+
+  if (!note || !note.trim()) {
+    return;
+  }
+
+  const firstNote = notesList.querySelector('p');
+
+  if (firstNote && firstNote.textContent === 'No project notes added yet.') {
+    notesList.innerHTML = '';
+  }
+
+  const noteElement = document.createElement('p');
+  noteElement.textContent = note.trim();
+
+  notesList.appendChild(noteElement);
+});
+const taskButtons = document.querySelectorAll('.task-toggle');
+
+taskButtons.forEach(button => {
+  button.addEventListener('click', () => {
+    const taskItem = button.closest('.task-item');
+    const projectCard = button.closest('.project-card');
+
+    taskItem.classList.add('completed');
+    button.textContent = 'Completed';
+    button.disabled = true;
+
+    const tasks = projectCard.querySelectorAll('.task-item');
+    const completedTasks =
+      projectCard.querySelectorAll('.task-item.completed');
+
+    if (tasks.length === completedTasks.length) {
+      projectCard.querySelector('.project-status').textContent = 'Completed';
+    }
+  });
+});
+const addTaskButtons = document.querySelectorAll('.add-task-button');
+
+addTaskButtons.forEach(button => {
+  button.addEventListener('click', () => {
+    const addTask = button.closest('.add-task');
+    const input = addTask.querySelector('.task-input');
+    const taskText = input.value.trim();
+
+    if (!taskText) {
+      return;
+    }
+
+    const taskList = addTask.closest('.task-list');
+
+    const taskItem = document.createElement('div');
+    taskItem.className = 'task-item';
+
+    const taskTextElement = document.createElement('span');
+    taskTextElement.textContent = taskText;
+
+    const completeButton = document.createElement('button');
+    completeButton.type = 'button';
+    completeButton.className = 'task-toggle';
+    completeButton.textContent = 'Mark Complete';
+
+    taskItem.appendChild(taskTextElement);
+    taskItem.appendChild(completeButton);
+
+    taskList.insertBefore(taskItem, addTask);
+
+    input.value = '';
+
+    completeButton.addEventListener('click', () => {
+      const projectCard = taskItem.closest('.project-card');
+
+      taskItem.classList.add('completed');
+      completeButton.textContent = 'Completed';
+      completeButton.disabled = true;
+
+      const tasks = projectCard.querySelectorAll('.task-item');
+      const completedTasks =
+        projectCard.querySelectorAll('.task-item.completed');
+
+      if (tasks.length === completedTasks.length) {
+        projectCard.querySelector('.project-status').textContent = 'Completed';
+      }
+    });
+  });
+});
+const taskFilter = document.getElementById('taskFilter');
+
+taskFilter.addEventListener('change', () => {
+  const filter = taskFilter.value;
+
+  document.querySelectorAll('.task-item').forEach(task => {
+    const isCompleted = task.classList.contains('completed');
+
+    if (filter === 'all') {
+      task.style.display = '';
+    } else if (filter === 'completed') {
+      task.style.display = isCompleted ? '' : 'none';
+    } else {
+      task.style.display = isCompleted ? 'none' : '';
+    }
+  });
+});
+const projectActionButtons = document.querySelectorAll('.project-action');
+
+projectActionButtons.forEach(button => {
+  button.addEventListener('click', () => {
+    const card = button.closest('.project-card');
+
+    const projectName = card.querySelector('h3').textContent;
+    const projectStatus = card.querySelector('.project-status').textContent;
+
+    workspaceTitle.textContent = projectName;
+    workspaceStatus.textContent = projectStatus;
+
+    workspaceDetails.textContent =
+      'Manage your collaboration and work on the selected project.';
+
+    projectWorkspace.style.display = 'block';
+
+    projectWorkspace.scrollIntoView({
+      behavior: 'smooth',
+      block: 'start'
+    });
+
+    if (projectStatus.trim() === 'Completed') {
+      completeProject.textContent = 'Project Completed';
+      completeProject.disabled = true;
+      projectProgressFill.style.width = '100%';
+      projectProgressText.textContent = 'Project completed.';
+    } else if (projectStatus.trim() === 'Planning') {
+      completeProject.textContent = 'Mark as Complete';
+      completeProject.disabled = false;
+      projectProgressFill.style.width = '25%';
+      projectProgressText.textContent =
+        'Project is currently in the planning stage.';
+    } else {
+      completeProject.textContent = 'Mark as Complete';
+      completeProject.disabled = false;
+      projectProgressFill.style.width = '50%';
+      projectProgressText.textContent =
+        'Project is currently in progress.';
+    }
+
+    notesList.innerHTML = '<p>No project notes added yet.</p>';
+  });
+});
+</script>
 </body>
-
 </html>
