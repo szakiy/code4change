@@ -1,104 +1,102 @@
 const { Pool } = require('pg');
 
-let pool;
-if (!pool) {
-    pool = new Pool({
-        connectionString: process.env.DATABASE_URL,
-        ssl: { rejectUnauthorized: false }
-    });
-}
+const pool = new Pool({
+  connectionString: process.env.DATABASE_URL,
+  ssl: { rejectUnauthorized: false }
+});
 
 exports.handler = async (event) => {
-    const httpMethod = event.httpMethod;
-    const headers = {
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Headers': 'Content-Type',
-        'Access-Control-Allow-Methods': 'GET, POST, PUT, OPTIONS',
-        'Content-Type': 'application/json'
+  const { httpMethod, path } = event;
+  const body = event.body ? JSON.parse(event.body) : {};
+
+  try {
+    // ----------------------------------------------------
+    // GET: Dashboard Stats Metric Cards
+    // ----------------------------------------------------
+    if (httpMethod === 'GET' && path.endsWith('/stats')) {
+      const result = await pool.query('SELECT * FROM get_dashboard_stats();');
+      return { statusCode: 200, body: JSON.stringify(result.rows[0]) };
+    }
+
+    // ----------------------------------------------------
+    // GET: Full Challenge Feed with Join Data
+    // ----------------------------------------------------
+    if (httpMethod === 'GET' && path.endsWith('/challenges')) {
+      const result = await pool.query('SELECT * FROM get_challenge_feed();');
+      return { statusCode: 200, body: JSON.stringify(result.rows) };
+    }
+
+    // ----------------------------------------------------
+    // POST: Submit a New Societal Challenge/Query
+    // ----------------------------------------------------
+    if (httpMethod === 'POST' && path.endsWith('/challenges')) {
+      const { title, description, category_id, reporter_name, reporter_org_id } = body;
+      
+      const query = `
+        INSERT INTO societal_challenges (title, description, category_id, reporter_name, reporter_org_id)
+        VALUES ($1, $2, $3, $4, $5) 
+        RETURNING *;
+      `;
+      const values = [title, description, category_id, reporter_name, reporter_org_id || null];
+      const result = await pool.query(query, values);
+      
+      return { statusCode: 201, body: JSON.stringify(result.rows[0]) };
+    }
+
+    // ----------------------------------------------------
+    // POST: Assign Challenge to an Industry/Company
+    // ----------------------------------------------------
+    if (httpMethod === 'POST' && path.endsWith('/assign')) {
+      const { challenge_id, assigned_org_id } = body;
+
+      // Create Assignment
+      const assignQuery = `
+        INSERT INTO project_assignments (challenge_id, assigned_org_id)
+        VALUES ($1, $2) RETURNING *;
+      `;
+      const result = await pool.query(assignQuery, [challenge_id, assigned_org_id]);
+
+      // Update Challenge Status
+      await pool.query(
+        `UPDATE societal_challenges SET status = 'ASSIGNED' WHERE id = $1;`,
+        [challenge_id]
+      );
+
+      return { statusCode: 201, body: JSON.stringify(result.rows[0]) };
+    }
+
+    // ----------------------------------------------------
+    // POST: Update Industry Project Progress / Milestones
+    // ----------------------------------------------------
+    if (httpMethod === 'POST' && path.endsWith('/progress')) {
+      const { assignment_id, milestone_title, progress_percentage, remarks } = body;
+
+      const progressQuery = `
+        INSERT INTO project_progress (assignment_id, milestone_title, progress_percentage, remarks)
+        VALUES ($1, $2, $3, $4) RETURNING *;
+      `;
+      const values = [assignment_id, milestone_title, progress_percentage, remarks];
+      const result = await pool.query(progressQuery, values);
+
+      // Automatically update main status to RESOLVED if 100% complete
+      if (progress_percentage === 100) {
+        await pool.query(`
+          UPDATE societal_challenges 
+          SET status = 'RESOLVED' 
+          WHERE id = (SELECT challenge_id FROM project_assignments WHERE id = $1);
+        `, [assignment_id]);
+      }
+
+      return { statusCode: 201, body: JSON.stringify(result.rows[0]) };
+    }
+
+    return { statusCode: 404, body: JSON.stringify({ error: "Route not found" }) };
+
+  } catch (error) {
+    console.error('Database query error:', error);
+    return {
+      statusCode: 500,
+      body: JSON.stringify({ error: "Internal Server Error", details: error.message })
     };
-
-    if (httpMethod === 'OPTIONS') {
-        return { statusCode: 200, headers, body: '' };
-    }
-
-    try {
-        // GET: Retrieve all ideas
-        if (httpMethod === 'GET') {
-            const queryText = 'SELECT id, name, idea, created_at FROM student_ideas ORDER BY created_at DESC;';
-            const result = await pool.query(queryText);
-            return {
-                statusCode: 200,
-                headers,
-                body: JSON.stringify(result.rows)
-            };
-        }
-
-        // POST: Create a new idea
-        if (httpMethod === 'POST') {
-            const { name, idea } = JSON.parse(event.body || '{}');
-
-            if (!name || !idea) {
-                return {
-                    statusCode: 400,
-                    headers,
-                    body: JSON.stringify({ error: 'Name and Idea fields are required.' })
-                };
-            }
-
-            const queryText = 'INSERT INTO student_ideas (name, idea) VALUES ($1, $2) RETURNING *;';
-            const values = [name, idea];
-            const result = await pool.query(queryText, values);
-
-            return {
-                statusCode: 201,
-                headers,
-                body: JSON.stringify(result.rows[0])
-            };
-        }
-
-        // PUT: Update existing idea
-        if (httpMethod === 'PUT') {
-            const id = event.queryStringParameters ? event.queryStringParameters.id : null;
-            const { name, idea } = JSON.parse(event.body || '{}');
-
-            if (!id || !name || !idea) {
-                return {
-                    statusCode: 400,
-                    headers,
-                    body: JSON.stringify({ error: 'ID, Name, and Idea fields are required.' })
-                };
-            }
-
-            const queryText = 'UPDATE student_ideas SET name = $1, idea = $2 WHERE id = $3 RETURNING *;';
-            const values = [name, idea, id];
-            const result = await pool.query(queryText, values);
-
-            if (result.rows.length === 0) {
-                return {
-                    statusCode: 404,
-                    headers,
-                    body: JSON.stringify({ error: 'Idea not found.' })
-                };
-            }
-
-            return {
-                statusCode: 200,
-                headers,
-                body: JSON.stringify(result.rows[0])
-            };
-        }
-
-        return {
-            statusCode: 405,
-            headers,
-            body: JSON.stringify({ error: 'Method Not Allowed' })
-        };
-    } catch (error) {
-        console.error('Database Error:', error);
-        return {
-            statusCode: 500,
-            headers,
-            body: JSON.stringify({ error: 'Internal Server Error' })
-        };
-    }
+  }
 };
