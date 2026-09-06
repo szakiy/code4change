@@ -99,19 +99,19 @@
   }
 
   .nav-title {
-    color: #dbeafe;
-    padding: 0.6rem 0.85rem;
-    cursor: pointer;
-    display: block;
-    font-weight: 600;
-    border-radius: 8px;
-    transition: background 0.2s ease, color 0.2s ease;
-  }
+  display: block;
+  padding: 0.75rem 1rem;
+  color: var(--white);
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: background 0.2s ease;
+}
 
-  .nav-title:hover {
-    color: var(--white);
-    background: rgba(37, 99, 235, 0.2);
-  }
+.nav-title:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
 
   /* Dropdown */
 
@@ -1060,8 +1060,265 @@
       width: 100%;
     }
   }
+  /* APP VIEW SYSTEM */
+
+.app-section {
+  display: none;
+}
+
+.app-section.active {
+  display: block;
+}
+/* HOME DASHBOARD */
+
+.home-section {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 3rem 2rem;
+}
+
+.home-section .dashboard-header {
+  margin-bottom: 2rem;
+}
+
+.home-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+.home-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 1.8rem;
+  box-shadow: var(--shadow);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+}
+
+.home-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-hover);
+}
+
+.home-card h3 {
+  margin: 0 0 0.7rem;
+  color: var(--navy);
+  font-size: 1.2rem;
+}
+
+.home-card p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.6;
+}
+/* HOME PAGE */
+
+.home-section {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 2rem 3rem;
+}
+
+/* Hero */
+.home-section .dashboard-header {
+  background: linear-gradient(135deg, #071426, #163d6b);
+  color: var(--white);
+  padding: 2.5rem 3rem;
+  border-radius: 16px;
+  margin-bottom: 2rem;
+  box-shadow: 0 10px 30px rgba(7, 20, 38, 0.15);
+}
+
+.home-section .dashboard-header h1 {
+  margin: 0 0 0.7rem;
+  color: var(--white);
+  font-size: 2.2rem;
+  font-weight: 700;
+}
+
+.home-section .dashboard-header p {
+  margin: 0;
+  max-width: 750px;
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.6;
+  font-size: 1.05rem;
+}
+
+/* Home cards */
+.home-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+
+.home-card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 2rem;
+  min-height: 130px;
+  box-shadow: var(--shadow);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+}
+
+.home-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-hover);
+}
+
+.home-card h3 {
+  margin: 0 0 0.7rem;
+  color: var(--navy);
+  font-size: 1.2rem;
+}
+
+.home-card p {
+  margin: 0;
+  color: var(--muted);
+  line-height: 1.6;
+  font-size: 0.98rem;
+}
+/* ACTIVE NAVIGATION */
+
+.nav-title.active {
+  background: rgba(255, 255, 255, 0.14);
+  box-shadow: inset 0 -2px 0 rgba(255, 255, 255, 0.8);
+}
+/* RESPONSIVE HOME PAGE */
+
+@media (max-width: 768px) {
+  .home-section {
+    padding: 1.5rem 1rem 2rem;
+  }
+
+  .home-section .dashboard-header {
+    padding: 2rem;
+  }
+
+  .home-section .dashboard-header h1 {
+    font-size: 1.7rem;
+  }
+
+  .home-grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .home-card {
+    padding: 1.5rem;
+  }
+}
+/* HOME CARD POLISH */
+
+.home-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.home-card::after {
+  content: "→";
+  position: absolute;
+  right: 1.8rem;
+  bottom: 1.5rem;
+  font-size: 1.4rem;
+  color: var(--blue);
+  opacity: 0;
+  transform: translateX(-6px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.home-card:hover::after {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.home-card::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 4px;
+  height: 100%;
+  background: var(--blue);
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform 0.2s ease;
+}
+
+.home-card:hover::before {
+  transform: scaleY(1);
+}
+/* HOME ACTIONS HEADING */
+
+.home-actions-heading {
+  margin-bottom: 1.2rem;
+}
+
+.home-actions-heading h2 {
+  margin: 0 0 0.3rem;
+  color: var(--navy);
+  font-size: 1.4rem;
+}
+
+.home-actions-heading p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.95rem;
+}
+/* HOME CARD ICONS */
+
+.home-card-icon {
+  width: 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+  border-radius: 10px;
+  background: var(--blue-light);
+  color: var(--blue);
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+/* HOME PAGE SPACING */
+
+.home-section {
+  padding-top: 1.2rem;
+}
+
+.home-section .dashboard-header {
+  margin-top: 0;
+}
+/* HOME NAV ACTIVE STATE */
+
+#homeNav.active {
+  background: rgba(255, 255, 255, 0.14);
+  box-shadow: inset 0 -2px 0 rgba(255, 255, 255, 0.8);
+}
+/* FIX DROPDOWN HOVER GAP */
+
+.nav-item {
+  position: relative;
+}
+
+.nav-item .dropdown {
+  top: 100%;
+  margin-top: 0;
+}
+
+/* Invisible hover bridge between menu item and dropdown */
+.nav-item::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -12px;
+  height: 12px;
+}
 </style>
-  </style>
 </head>
 <body>
 
@@ -1073,7 +1330,9 @@
       <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle Menu">☰</button>
       
       <ul class="nav-menu" id="navMenu">
-
+<li class="nav-item">
+  <span class="nav-title" id="homeNav">Home</span>
+</li>
   <li class="nav-item">
     <span class="nav-title">Challenges</span>
     <ul class="dropdown">
@@ -1148,15 +1407,53 @@
   </header>
 
   <main class="content-section">
-
+<div class="home-section app-section active" id="homeSection">
   <div class="dashboard-header">
     <h1>Welcome to Code4Change</h1>
-    <p>
-      A platform to discover real-world challenges, collaborate on solutions,
-      and track the impact of your projects.
-    </p>
+    <p>Turn real-world challenges into meaningful solutions through collaboration and technology.</p>
   </div>
-  <div class="challenge-form" id="challengeForm">
+<div class="home-actions-heading">
+  <h2>Get Started</h2>
+  <p>Choose an action to begin.</p>
+</div>
+  <div class="home-grid">
+    <div class="home-card" data-target="challengeForm">
+      <div class="home-card-icon">+</div>
+      <h3>Submit a Challenge</h3>
+      <p>Share a real-world problem that needs a solution.</p>
+    </div>
+
+    <div class="home-card" data-target="exploreChallenges">
+      <div class="home-card-icon">⌕</div>
+      <h3>Explore Challenges</h3>
+      <p>Discover challenges and opportunities to contribute.</p>
+    </div>
+
+    <div class="home-card" data-target="myChallenges">
+       <div class="home-card-icon">↔</div>
+      <h3>Collaborate</h3>
+      <p>Work with others to turn ideas into projects.</p>
+    </div>
+
+    <div class="home-card" data-target="impactDashboard">
+      <div class="home-card-icon">↗</div>
+      <h3>Track Impact</h3>
+      <p>Follow project progress and see the difference being created.</p>
+    </div>
+  </div>
+</div>
+  <div class="my-challenges-section app-section" id="myChallenges">
+  <div class="section-heading">
+    <h2>My Challenges</h2>
+    <p>Challenges you have submitted and are currently working on.</p>
+  </div>
+
+  <div class="empty-state">
+    <h3>No challenges yet</h3>
+    <p>Submit a challenge to see it appear here.</p>
+  </div>
+</div>
+  <div class="challenge-form app-section" id="challengeForm">
   <h2>Submit a Challenge</h2>
 
   <form>
@@ -1197,7 +1494,7 @@
     <button type="submit">Submit Challenge</button>
   </form>
 </div>
-<div class="explore-section" id="exploreChallenges">
+<div class="explore-section app-section" id="exploreChallenges">
 
   <div class="section-heading">
     <h2>Explore Challenges</h2>
@@ -1251,7 +1548,7 @@
   </div>
 
 </div>
-<div class="ai-analysis-section" id="aiAnalysis">
+<div class="ai-analysis-section app-section" id="aiAnalysis">
 
   <div class="section-heading">
     <h2>AI Challenge Analysis</h2>
@@ -1320,7 +1617,7 @@
         <li>Project collaboration</li>
       </ul>
     </div>
-
+  </div>
     <div class="analysis-card">
       <h3>Potential Impact</h3>
       <p id="potentialImpact">
@@ -1331,7 +1628,7 @@
   </div>
 
 </div>
-  <div class="dashboard-section">
+  <div class="dashboard-section app-section" id="platformWorkflow">
 
   <h2>Platform Workflow</h2>
 
@@ -1350,8 +1647,9 @@
         Analyze, summarize, and understand complex challenges using AI-powered insights.
       </p>
     </div>
-    
-<div class="partners-section" id="recommendedPartners">
+  </div>
+  </div>
+<div class="partners-section app-section" id="recommendedPartners">
 
   <div class="section-heading">
     <h2>Recommended Partners</h2>
@@ -1462,7 +1760,7 @@
   </div>
 
 </div>
-<div class="collaborations-section" id="myCollaborations">
+<div class="collaborations-section app-section" id="myCollaborations">
 
   <div class="section-heading">
     <h2>My Collaborations</h2>
@@ -1582,7 +1880,7 @@
   </div>
 
 </div>
-<div class="projects-section" id="projectsTasks">
+<div class="projects-section app-section" id="projectsTasks">
 
   <div class="section-heading">
     <h2>Projects & Tasks</h2>
@@ -1714,7 +2012,7 @@
   </div>
 
 </div>
-<div class="impact-dashboard" id="impactDashboard">
+<div class="impact-dashboard app-section" id="impactDashboard">
 
   <div class="section-heading">
     <h2>Impact Dashboard</h2>
@@ -1772,7 +2070,7 @@
 
 </div>
 </div>
-<div class="progress-section" id="progressTracking">
+<div class="progress-section app-section" id="progressTracking">
 
   <div class="section-heading">
     <h2>Progress Tracking</h2>
@@ -1855,25 +2153,12 @@
 </div>
 </div>
 </div>
-    <div class="feature-card">
-      <h3>Intelligent Collaboration</h3>
-      <p>
-        Connect with suitable contributors and work together on meaningful solutions.
-      </p>
-    </div>
-
-    <div class="feature-card">
-      <h3>Impact Tracking</h3>
-      <p>
-        Track solution progress and evaluate the real-world impact of completed projects.
-      </p>
-    </div>
 
   </div>
 
 </div>
 
-  <div class="dashboard-section">
+  <div class="dashboard-section app-section" id="whatYouCanDo">
     <h2>What you can do</h2>
 
     <div class="feature-grid">
@@ -1942,54 +2227,7 @@
     navMenu.classList.toggle('active');
   });
 
-  // Handle menu options
-  subOptions.forEach(option => {
-  option.addEventListener('click', (event) => {
-    event.preventDefault();
-
-    const selectedOption = option.getAttribute('data-title');
-
-    if (selectedOption === 'Submit a Challenge') {
-  document.getElementById('challengeForm').scrollIntoView({
-    behavior: 'smooth'
-  });
-
-} else if (selectedOption === 'Explore Challenges') {
-  document.getElementById('exploreChallenges').scrollIntoView({
-    behavior: 'smooth'
-  });
-
-} else if (selectedOption === 'AI Challenge Analysis') {
-  document.getElementById('aiAnalysis').scrollIntoView({
-    behavior: 'smooth'
-  });
-} else if (selectedOption === 'Recommended Partners') {
-  document.getElementById('recommendedPartners').scrollIntoView({
-    behavior: 'smooth'
-  });
- } else if (selectedOption === 'My Collaborations') {
-  document.getElementById('myCollaborations').scrollIntoView({
-    behavior: 'smooth'
-  });
-} else if (selectedOption === 'Projects & Tasks') {
-  document.getElementById('projectsTasks').scrollIntoView({
-    behavior: 'smooth'
-  });
-} else if (selectedOption === 'Impact Dashboard') {
-  document.getElementById('impactDashboard').scrollIntoView({
-    behavior: 'smooth'
-  });
-} else if (selectedOption === 'Progress Tracking') {
-  document.getElementById('progressTracking').scrollIntoView({
-    behavior: 'smooth'
-  });
-}else {
-  alert(`${selectedOption} selected`);
-}
-
-    navMenu.classList.remove('active');
-  });
-});
+  
 const challengeCards = document.querySelectorAll('.challenge-card');
 const challengeDetails = document.getElementById('challengeDetails');
 const exploreChallenges = document.getElementById('exploreChallenges');
@@ -2217,7 +2455,7 @@ const impactDetailsText =
 const impactDescriptions = {
   'Environmental Solutions': {
     description:
-      'Explore projects that reduce waste, conserve resources, and support sustainable communities.',
+      'Explore projects that reduce waste, conserve aresources, and support sustainable communities.',
     projects: [
       'Waste Management in Urban Areas',
       'Smart Water Management'
@@ -2578,6 +2816,84 @@ projectActionButtons.forEach(button => {
     }
 
     notesList.innerHTML = '<p>No project notes added yet.</p>';
+  });
+});
+// APP VIEW NAVIGATION
+
+const appSections = document.querySelectorAll('.app-section');
+
+function showAppSection(sectionId) {
+  appSections.forEach(section => {
+    section.classList.remove('active');
+  });
+
+  const selectedSection = document.getElementById(sectionId);
+
+  if (selectedSection) {
+    selectedSection.classList.add('active');
+  }
+}
+// CONNECT NAVIGATION TO APP VIEWS
+
+const navOptions = document.querySelectorAll('.sub-option');
+
+navOptions.forEach(option => {
+  option.addEventListener('click', event => {
+    event.preventDefault();
+document.querySelectorAll('.nav-title').forEach(nav => {
+  nav.classList.remove('active');
+});
+
+option.closest('.nav-item').querySelector('.nav-title').classList.add('active');
+    const title = option.dataset.title;
+
+    const sectionMap = {
+      'Submit a Challenge': 'challengeForm',
+      'My Challenges': 'myChallenges',
+      'Explore Challenges': 'exploreChallenges',
+      'AI Challenge Analysis': 'aiAnalysis',
+      'Recommended Partners': 'recommendedPartners',
+      'My Collaborations': 'myCollaborations',
+      'Projects & Tasks': 'projectsTasks',
+      'Impact Dashboard': 'impactDashboard',
+      'Progress Tracking': 'progressTracking'
+    };
+
+    const sectionId = sectionMap[title];
+
+    if (sectionId) {
+      showAppSection(sectionId);
+    }
+  });
+});
+// DEFAULT APP VIEW
+
+showAppSection('homeSection');
+
+// HOME NAVIGATION
+
+const homeNav = document.getElementById('homeNav');
+homeNav.classList.add('active');
+homeNav.addEventListener('click', () => {
+  showAppSection('homeSection');
+
+  document.querySelectorAll('.nav-title').forEach(nav => {
+    nav.classList.remove('active');
+  });
+
+  homeNav.classList.add('active');
+});
+// HOME CARD NAVIGATION
+
+const homeCards = document.querySelectorAll('.home-card');
+
+homeCards.forEach(card => {
+  card.addEventListener('click', () => {
+    const targetSection = card.dataset.target;
+
+    if (targetSection) {
+      showAppSection(targetSection);
+    }
   });
 });
 </script>
