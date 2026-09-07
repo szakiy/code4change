@@ -988,62 +988,109 @@
       <button class="mobile-toggle" id="mobileToggle" aria-label="Toggle Menu">☰</button>
       
       <ul class="nav-menu" id="navMenu">
-        <li class="nav-item">
-          <span class="nav-title">Challenges</span>
-          <ul class="dropdown">
-            <li class="dropdown-item">
-              <a href="#" class="sub-option" data-view="challengeForm">Submit a Challenge</a>
-            </li>
-            <li class="dropdown-item">
-              <a href="#" class="sub-option" data-view="exploreChallenges">Explore Challenges</a>
-            </li>
-            <li class="dropdown-item">
-              <a href="#" class="sub-option" data-view="exploreChallenges">My Challenges</a>
-            </li>
-          </ul>
-        </li>
+  <li class="nav-item">
+    <span class="nav-title">Challenges</span>
+    <ul class="dropdown">
+      <li class="dropdown-item">
+        <a href="#" class="sub-option" data-view="challengeForm">Submit a Challenge</a>
+      </li>
+      <li class="dropdown-item">
+        <a href="#" class="sub-option" data-view="exploreChallenges">Explore Challenges</a>
+      </li>
+    </ul>
+  </li>
 
-        <li class="nav-item">
-          <span class="nav-title">Intelligence</span>
-          <ul class="dropdown">
-            <li class="dropdown-item">
-              <a href="#" class="sub-option" data-view="aiAnalysis">AI Challenge Analysis</a>
-            </li>
-            <li class="dropdown-item">
-              <a href="#" class="sub-option" data-view="recommendedPartners">Recommended Partners</a>
-            </li>
-          </ul>
-        </li>
+  <li class="nav-item">
+    <span class="nav-title">Intelligence</span>
+    <ul class="dropdown">
+      <li class="dropdown-item">
+        <a href="#" class="sub-option" data-view="aiAnalysis">AI Challenge Analysis</a>
+      </li>
+      <li class="dropdown-item">
+        <a href="#" class="sub-option" data-view="recommendedPartners">Recommended Partners</a>
+      </li>
+    </ul>
+  </li>
 
-        <li class="nav-item">
-          <span class="nav-title">Collaboration</span>
-          <ul class="dropdown">
-            <li class="dropdown-item">
-              <a href="#" class="sub-option" data-view="myCollaborations">My Collaborations</a>
-            </li>
-            <li class="dropdown-item">
-              <a href="#" class="sub-option" data-view="projectsTasks">Projects & Tasks</a>
-            </li>
-          </ul>
-        </li>
+  <li class="nav-item">
+    <span class="nav-title">Collaboration</span>
+    <ul class="dropdown">
+      <li class="dropdown-item">
+        <a href="#" class="sub-option" data-view="myCollaborations">My Collaborations</a>
+      </li>
+      <li class="dropdown-item">
+        <a href="#" class="sub-option" data-view="projectsTasks">Projects & Tasks</a>
+      </li>
+    </ul>
+  </li>
 
-        <li class="nav-item">
-          <span class="nav-title">Impact</span>
-          <ul class="dropdown">
-            <li class="dropdown-item">
-              <a href="#" class="sub-option" data-view="impactDashboard">Impact Dashboard</a>
-            </li>
-            <li class="dropdown-item">
-              <a href="#" class="sub-option" data-view="progressTracking">Progress Tracking</a>
-            </li>
-          </ul>
-        </li>
+  <li class="nav-item">
+    <span class="nav-title">Impact</span>
+    <ul class="dropdown">
+      <li class="dropdown-item">
+        <a href="#" class="sub-option" data-view="impactDashboard">Impact Dashboard</a>
+      </li>
+      <li class="dropdown-item">
+        <a href="#" class="sub-option" data-view="progressTracking">Progress Tracking</a>
+      </li>
+    </ul>
+  </li>
+
+  <li class="nav-item">
+    <a href="#" class="nav-title sub-option" data-view="authView" style="text-decoration:none;">Login / Register</a>
+  </li>
+</ul>
+    </li>
       </ul>
     </div>
   </header>
 
   <main class="content-section">
 
+
+    <!-- LOGIN / REGISTER SECTION -->
+<div class="view-section content-card" id="authView">
+  <div style="display: flex; gap: 1rem; margin-bottom: 1.5rem; border-bottom: 2px solid var(--border);">
+    <button id="showLoginBtn" style="background:none; border:none; padding: 0.5rem 1rem; font-weight:700; cursor:pointer; color:var(--blue); border-bottom: 2px solid var(--blue);">Login</button>
+    <button id="showRegisterBtn" style="background:none; border:none; padding: 0.5rem 1rem; font-weight:700; cursor:pointer; color:var(--muted);">Register Collaborator</button>
+  </div>
+
+  <!-- LOGIN FORM -->
+  <form id="loginForm" class="challenge-form">
+    <h2>Collaborator Login</h2>
+    <label for="loginNameOrEmail">Name or Email</label>
+    <input type="text" id="loginNameOrEmail" placeholder="Enter your full name or email" required>
+
+    <label for="loginPassword">Password</label>
+    <input type="password" id="loginPassword" placeholder="Enter password" required>
+
+    <button type="submit">Sign In</button>
+  </form>
+
+  <!-- REGISTER FORM -->
+  <form id="registerForm" class="challenge-form" style="display: none;">
+    <h2>Register Collaborator</h2>
+    <label for="regFullName">Full Name</label>
+    <input type="text" id="regFullName" placeholder="e.g. Alex Johnson" required>
+
+    <label for="regEmail">Email Address</label>
+    <input type="email" id="regEmail" placeholder="e.g. alex@example.com" required>
+
+    <label for="regPassword">Password</label>
+    <input type="password" id="regPassword" placeholder="Create a strong password" required>
+
+    <label for="regSkill">Primary Skill Area</label>
+    <select id="regSkill">
+      <option value="Frontend Development">Frontend Development</option>
+      <option value="Backend Development">Backend Development</option>
+      <option value="AI & Data Science">AI & Data Science</option>
+      <option value="UI/UX Design">UI/UX Design</option>
+    </select>
+
+    <button type="submit">Create Account</button>
+  </form>
+</div>
+    
     <!-- HOME VIEW SECTION -->
     <div class="view-section active" id="homeView">
       <div class="dashboard-header">
