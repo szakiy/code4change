@@ -1814,6 +1814,86 @@
     document.getElementById('impactDetailsText').textContent = description;
   });
 });
+
+
+    // Toggle Auth Tabs
+const showLoginBtn = document.getElementById('showLoginBtn');
+const showRegisterBtn = document.getElementById('showRegisterBtn');
+const loginForm = document.getElementById('loginForm');
+const registerForm = document.getElementById('registerForm');
+
+showLoginBtn.addEventListener('click', () => {
+  loginForm.style.display = 'flex';
+  registerForm.style.display = 'none';
+  showLoginBtn.style.color = 'var(--blue)';
+  showLoginBtn.style.borderBottom = '2px solid var(--blue)';
+  showRegisterBtn.style.color = 'var(--muted)';
+  showRegisterBtn.style.borderBottom = 'none';
+});
+
+showRegisterBtn.addEventListener('click', () => {
+  loginForm.style.display = 'none';
+  registerForm.style.display = 'flex';
+  showRegisterBtn.style.color = 'var(--blue)';
+  showRegisterBtn.style.borderBottom = '2px solid var(--blue)';
+  showLoginBtn.style.color = 'var(--muted)';
+  showLoginBtn.style.borderBottom = 'none';
+});
+
+// Submit Login Request to Server
+loginForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const nameOrEmail = document.getElementById('loginNameOrEmail').value;
+  const password = document.getElementById('loginPassword').value;
+
+  try {
+    const response = await fetch('/api/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ nameOrEmail, password })
+    });
+    const result = await response.json();
+
+    if (response.ok) {
+      alert(`Welcome back, ${result.user.fullName}!`);
+      switchView('myCollaborations');
+    } else {
+      alert(result.message);
+    }
+  } catch (err) {
+    alert('Failed to connect to authentication server.');
+  }
+});
+
+// Submit Registration Request to Server
+registerForm.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const fullName = document.getElementById('regFullName').value;
+  const email = document.getElementById('regEmail').value;
+  const password = document.getElementById('regPassword').value;
+  const primarySkill = document.getElementById('regSkill').value;
+
+  try {
+    const response = await fetch('/api/register', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ fullName, email, password, primarySkill })
+    });
+    const result = await response.json();
+
+    if (response.ok) {
+      alert(result.message);
+      showLoginBtn.click();
+    } else {
+      alert(result.message);
+    }
+  } catch (err) {
+    alert('Failed to connect to authentication server.');
+  }
+});
+
+    
+    
   </script>
 </body>
 </html>
