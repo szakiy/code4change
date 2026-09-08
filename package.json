@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/szakiy/code4change#readme",
   "dependencies": {
+    "bcryptjs": "^3.0.3",
     "dotenv": "^16.4.5",
     "pg": "^8.11.5"
   }
