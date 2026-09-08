@@ -26,7 +26,6 @@
     --text: #172033;
     --muted: #64748b;
     --shadow: 0 8px 24px rgba(7, 20, 38, 0.08);
-    --shadow-hover: 0 14px 30px rgba(7, 20, 38, 0.14);
     --radius: 12px;
   }
 
@@ -55,11 +54,6 @@
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
-    align-items: center;
-  }
-
-  .logo {
-    display: flex;
     align-items: center;
   }
 
@@ -119,7 +113,6 @@
     background: var(--sky);
   }
 
-  /* Dropdown */
   .dropdown {
     display: none;
     position: absolute;
@@ -133,7 +126,6 @@
     z-index: 100;
     list-style: none;
     padding: 0.5rem;
-    overflow: hidden;
   }
 
   .nav-item:hover .dropdown {
@@ -163,8 +155,7 @@
   }
 
   .content-card, .dashboard-header, .challenge-form, .explore-section,
-  .ai-analysis-section, .partners-section, .collaborations-section,
-  .projects-section, .impact-dashboard, .progress-section, .project-workspace, .auth-container {
+  .collaborations-section, .projects-section, .auth-container {
     max-width: 1000px;
     margin: 2rem auto;
     background: var(--card);
@@ -184,13 +175,6 @@
     font-size: clamp(2rem, 4vw, 2.8rem);
     color: var(--navy);
     margin-bottom: 0.8rem;
-    letter-spacing: -0.5px;
-  }
-
-  .dashboard-header p {
-    font-size: 1.08rem;
-    color: var(--muted);
-    max-width: 720px;
   }
 
   .section-heading h2 {
@@ -207,17 +191,6 @@
     background: var(--blue);
     border-radius: 3px;
     margin-top: 0.65rem;
-  }
-
-  .section-heading p {
-    color: var(--muted);
-  }
-
-  /* FORMS & INPUTS */
-  .challenge-form h2, .auth-container h2 {
-    color: var(--navy);
-    font-size: 1.85rem;
-    margin-bottom: 1.5rem;
   }
 
   .challenge-form form, .auth-container form {
@@ -239,11 +212,10 @@
     border-radius: 8px;
     background: var(--white);
     color: var(--text);
-    font-family: inherit;
     font-size: 1rem;
   }
 
-  button, .view-challenge, .join-challenge, .connect-partner, .open-project, .project-action, .progress-action {
+  button {
     padding: 0.7rem 1.15rem;
     background: var(--blue);
     color: var(--white);
@@ -252,21 +224,19 @@
     cursor: pointer;
     font-size: 0.95rem;
     font-weight: 700;
-    transition: background 0.2s ease;
   }
 
   button:hover {
     background: var(--blue-dark);
   }
 
-  /* GRID SYSTEMS */
-  .challenge-grid, .home-grid, .partner-grid, .collaboration-grid {
+  .challenge-grid, .home-grid, .collaboration-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: 1.5rem;
   }
 
-  .challenge-card, .home-card, .partner-card, .collaboration-card {
+  .challenge-card, .home-card, .collaboration-card {
     border: 1px solid var(--border);
     border-radius: var(--radius);
     padding: 1.5rem;
@@ -285,7 +255,6 @@
     margin-bottom: 0.7rem;
   }
 
-  /* AUTH MODAL & SECTION */
   .auth-tabs {
     display: flex;
     gap: 1rem;
@@ -313,10 +282,27 @@
     display: block;
   }
 
-  /* HOME PAGE */
-  .home-section {
-    max-width: 1200px;
-    margin: 0 auto;
+  /* RESPONSIVE DESIGN */
+  @media (max-width: 768px) {
+    .mobile-toggle {
+      display: block;
+    }
+    .nav-menu {
+      display: none;
+      flex-direction: column;
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      background: var(--navy-light);
+      padding: 1rem;
+    }
+    .nav-menu.active {
+      display: flex;
+    }
+    .challenge-grid, .home-grid, .collaboration-grid {
+      grid-template-columns: 1fr;
+    }
   }
   </style>
 </head>
@@ -356,7 +342,6 @@
   </header>
 
   <main class="content-section">
-    <!-- HOME SECTION -->
     <div class="home-section app-section active" id="homeSection">
       <div class="dashboard-header">
         <h1>Welcome to Code4Change</h1>
@@ -378,14 +363,12 @@
       </div>
     </div>
 
-    <!-- AUTHENTICATION SECTION -->
     <div class="auth-container app-section" id="authSection">
       <div class="auth-tabs">
         <div class="auth-tab active" id="tabLogin">Login</div>
         <div class="auth-tab" id="tabRegister">Register</div>
       </div>
 
-      <!-- LOGIN FORM -->
       <form id="loginForm">
         <h2>Sign In to Your Account</h2>
         <label for="loginEmail">Email Address</label>
@@ -397,7 +380,6 @@
         <button type="submit" style="margin-top: 1rem;">Login</button>
       </form>
 
-      <!-- REGISTER FORM -->
       <form id="registerForm" style="display: none;">
         <h2>Create Collaborator Account</h2>
         <label for="regFullName">Full Name</label>
@@ -416,7 +398,6 @@
       </form>
     </div>
 
-    <!-- SUBMIT CHALLENGE FORM -->
     <div class="challenge-form app-section" id="challengeForm">
       <h2>Submit a Challenge</h2>
       <form id="submitChallengeForm">
@@ -429,22 +410,18 @@
         <label for="reporterName">Reporter / Organization Name</label>
         <input type="text" id="reporterName" placeholder="Your name or organization" required>
 
-        <button type="submit">Submit & Categorize with AI</button>
+        <button type="submit">Submit Challenge</button>
       </form>
     </div>
 
-    <!-- EXPLORE CHALLENGES (DYNAMIC DATABASE ONLY) -->
     <div class="explore-section app-section" id="exploreChallenges">
       <div class="section-heading">
         <h2>Explore Database Challenges</h2>
         <p>Dynamic challenges loaded directly from the societal_challenges database.</p>
       </div>
-      <div class="challenge-grid" id="databaseChallengesGrid">
-        <!-- Dynamic Content from DB -->
-      </div>
+      <div class="challenge-grid" id="databaseChallengesGrid"></div>
     </div>
 
-    <!-- COLLABORATIONS -->
     <div class="collaborations-section app-section" id="myCollaborations">
       <div class="section-heading">
         <h2>My Collaborations</h2>
@@ -460,7 +437,6 @@
       </div>
     </div>
 
-    <!-- PROJECTS & TASKS -->
     <div class="projects-section app-section" id="projectsTasks">
       <div class="section-heading">
         <h2>Projects & Tasks</h2>
@@ -469,10 +445,8 @@
       <p>Select a project from My Collaborations to view tasks.</p>
     </div>
   </main>
+
 <script>
-  /* ==========================================================================
-     SESSION & AUTHENTICATION MANAGEMENT
-     ========================================================================== */
   function getLoggedInUser() {
     return JSON.parse(localStorage.getItem('currentUser') || 'null');
   }
@@ -500,7 +474,6 @@
     showAppSection('homeSection');
   }
 
-  // Route Guard for Protected Pages
   const protectedSections = ['myCollaborations', 'projectsTasks'];
 
   function navigateToSection(sectionId) {
@@ -516,9 +489,7 @@
     showAppSection(sectionId);
   }
 
-  /* ==========================================================================
-     FETCH & RENDER CHALLENGES FROM BACKEND DATABASE
-     ========================================================================== */
+  /* Safe DOM Construction preventing XSS */
   async function renderDatabaseChallenges() {
     const grid = document.getElementById('databaseChallengesGrid');
     grid.innerHTML = '<p>Loading challenges from database...</p>';
@@ -536,23 +507,36 @@
       }
 
       challenges.forEach(challenge => {
-        const categoryName = challenge.category_name || "General Tech";
-        
         const card = document.createElement('div');
         card.className = 'challenge-card';
-        card.innerHTML = `
-          <span class="challenge-category">${categoryName}</span>
-          <h3>${challenge.title}</h3>
-          <p>${challenge.description}</p>
-          <small style="color: var(--muted); display:block; margin-bottom: 0.8rem;">
-            Reporter: ${challenge.reporter_name || 'Anonymous'}
-          </small>
-          <button onclick="startCollaboration(${challenge.id})">Start Collaboration</button>
-        `;
+
+        const categorySpan = document.createElement('span');
+        categorySpan.className = 'challenge-category';
+        categorySpan.textContent = challenge.category_name || "General Tech";
+
+        const titleEl = document.createElement('h3');
+        titleEl.textContent = challenge.title;
+
+        const descEl = document.createElement('p');
+        descEl.textContent = challenge.description;
+
+        const reporterEl = document.createElement('small');
+        reporterEl.style.cssText = "color: var(--muted); display:block; margin-bottom: 0.8rem;";
+        reporterEl.textContent = `Reporter: ${challenge.reporter_name || 'Anonymous'}`;
+
+        const actionBtn = document.createElement('button');
+        actionBtn.textContent = 'Start Collaboration';
+        actionBtn.addEventListener('click', () => startCollaboration(challenge.id));
+
+        card.appendChild(categorySpan);
+        card.appendChild(titleEl);
+        card.appendChild(descEl);
+        card.appendChild(reporterEl);
+        card.appendChild(actionBtn);
+
         grid.appendChild(card);
       });
     } catch (error) {
-      console.error(error);
       grid.innerHTML = `<p style="color: #dc2626;">Error loading challenges: ${error.message}</p>`;
     }
   }
@@ -569,9 +553,6 @@
     }
   }
 
-  /* ==========================================================================
-     NAVIGATION & SECTION VIEW SWITCHER
-     ========================================================================== */
   const appSections = document.querySelectorAll('.app-section');
 
   function showAppSection(sectionId) {
@@ -585,14 +566,17 @@
     }
   }
 
-  /* ==========================================================================
-     EVENT LISTENERS & FORM HANDLERS
-     ========================================================================== */
   window.addEventListener('DOMContentLoaded', () => {
     updateAuthNavUI();
     renderDatabaseChallenges();
 
-    // Tab Switcher for Login/Register
+    /* Mobile Toggle Event */
+    const mobileToggle = document.getElementById('mobileToggle');
+    const navMenu = document.getElementById('navMenu');
+    if (mobileToggle && navMenu) {
+      mobileToggle.addEventListener('click', () => navMenu.classList.toggle('active'));
+    }
+
     document.getElementById('tabLogin').addEventListener('click', () => {
       document.getElementById('tabLogin').classList.add('active');
       document.getElementById('tabRegister').classList.remove('active');
@@ -607,7 +591,6 @@
       document.getElementById('loginForm').style.display = 'none';
     });
 
-    // API Registration Handler
     document.getElementById('registerForm').addEventListener('submit', async (e) => {
       e.preventDefault();
 
@@ -645,7 +628,6 @@
       }
     });
 
-    // API Login Handler
     document.getElementById('loginForm').addEventListener('submit', async (e) => {
       e.preventDefault();
 
@@ -681,15 +663,13 @@
       }
     });
 
-    // API Submit Challenge Handler
     document.getElementById('submitChallengeForm').addEventListener('submit', async (e) => {
       e.preventDefault();
 
       const payload = {
         title: document.getElementById('challengeTitle').value.trim(),
         description: document.getElementById('description').value.trim(),
-        reporter_name: document.getElementById('reporterName').value.trim(),
-        category_id: 1
+        reporter_name: document.getElementById('reporterName').value.trim()
       };
 
       try {
@@ -702,7 +682,7 @@
 
         if (!res.ok) throw new Error(data.error || 'Failed to submit challenge');
 
-        alert('Challenge submitted to database successfully!');
+        alert('Challenge submitted successfully!');
         document.getElementById('submitChallengeForm').reset();
         showAppSection('exploreChallenges');
       } catch (err) {
@@ -710,7 +690,6 @@
       }
     });
 
-    // Navigation Menu Options
     document.querySelectorAll('.sub-option').forEach(option => {
       option.addEventListener('click', (e) => {
         e.preventDefault();
@@ -718,6 +697,7 @@
         const sectionMap = {
           'Submit a Challenge': 'challengeForm',
           'Explore Challenges': 'exploreChallenges',
+          'My Challenges': 'exploreChallenges',
           'My Collaborations': 'myCollaborations',
           'Projects & Tasks': 'projectsTasks'
         };
@@ -727,7 +707,6 @@
       });
     });
 
-    // Home Grid Card Clicks
     document.querySelectorAll('.home-card').forEach(card => {
       card.addEventListener('click', () => {
         const target = card.dataset.target;
@@ -735,7 +714,6 @@
       });
     });
 
-    // Home Title Click
     document.getElementById('homeNav').addEventListener('click', () => {
       showAppSection('homeSection');
     });
