@@ -11,9 +11,16 @@ const pool = new Pool({
 // Initialize Gemini AI Client
 const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY || '' });
 
+// Standard CORS Headers for Netlify Serverless Functions
+const headers = {
+  'Access-Control-Allow-Origin': '*',
+  'Access-Control-Allow-Headers': 'Content-Type, Authorization',
+  'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+  'Content-Type': 'application/json'
+};
+
 /**
  * AI Categorization Helper Function
- * Categorizes problem text into a category ID (1: Tech, 2: Environment, 3: Healthcare, 4: Education)
  */
 async function categorizeDescription(description) {
   if (!process.env.GEMINI_API_KEY || !description) return 1;
@@ -35,24 +42,45 @@ async function categorizeDescription(description) {
     return categoryMap[categoryName] || 1;
   } catch (err) {
     console.warn('AI Categorization fallback triggered:', err.message);
-    return 1; // Default to category_id = 1
+    return 1;
   }
 }
 
 exports.handler = async (event) => {
-  const { httpMethod, path } = event;
-  const body = event.body ? JSON.parse(event.body) : {};
+  // 1. Handle CORS Preflight OPTIONS Request
+  if (event.httpMethod === 'OPTIONS') {
+    return { statusCode: 200, headers, body: '' };
+  }
+
+  const { httpMethod } = event;
+  // Normalize path: remove trailing slashes for reliable route matching
+  const cleanPath = event.path ? event.path.replace(/\/+$/, '') : '';
+
+  // Safely parse JSON request body
+  let body = {};
+  if (event.body) {
+    try {
+      body = JSON.parse(event.body);
+    } catch (e) {
+      return {
+        statusCode: 400,
+        headers,
+        body: JSON.stringify({ error: "Invalid JSON payload in request body." })
+      };
+    }
+  }
 
   try {
     // ----------------------------------------------------
     // POST: Register New Collaborator
     // ----------------------------------------------------
-    if (httpMethod === 'POST' && path.endsWith('/register')) {
+    if (httpMethod === 'POST' && cleanPath.endsWith('/register')) {
       const { full_name, email, password, primary_skill } = body;
 
       if (!full_name || !email || !password) {
         return {
           statusCode: 400,
+          headers,
           body: JSON.stringify({ error: "Full name, email, and password are required." })
         };
       }
@@ -61,6 +89,7 @@ exports.handler = async (event) => {
       if (userCheck.rows.length > 0) {
         return {
           statusCode: 400,
+          headers,
           body: JSON.stringify({ error: "An account with this email already exists." })
         };
       }
@@ -74,18 +103,19 @@ exports.handler = async (event) => {
       const values = [full_name, email, password_hash, primary_skill || null];
       const result = await pool.query(query, values);
 
-      return { statusCode: 201, body: JSON.stringify(result.rows[0]) };
+      return { statusCode: 201, headers, body: JSON.stringify(result.rows[0]) };
     }
 
     // ----------------------------------------------------
     // POST: Authenticate / Login Collaborator
     // ----------------------------------------------------
-    if (httpMethod === 'POST' && path.endsWith('/login')) {
+    if (httpMethod === 'POST' && cleanPath.endsWith('/login')) {
       const { email, password } = body;
 
       if (!email || !password) {
         return {
           statusCode: 400,
+          headers,
           body: JSON.stringify({ error: "Email and password are required." })
         };
       }
@@ -96,6 +126,7 @@ exports.handler = async (event) => {
       if (result.rows.length === 0) {
         return {
           statusCode: 401,
+          headers,
           body: JSON.stringify({ error: "Invalid email or password." })
         };
       }
@@ -105,40 +136,43 @@ exports.handler = async (event) => {
       if (!isPasswordValid) {
         return {
           statusCode: 401,
+          headers,
           body: JSON.stringify({ error: "Invalid email or password." })
         };
       }
 
       delete user.password_hash;
-      return { statusCode: 200, body: JSON.stringify(user) };
+      return { statusCode: 200, headers, body: JSON.stringify(user) };
     }
 
     // ----------------------------------------------------
     // GET: Dashboard Stats Metric Cards
     // ----------------------------------------------------
-    if (httpMethod === 'GET' && path.endsWith('/stats')) {
+    if (httpMethod === 'GET' && cleanPath.endsWith('/stats')) {
       try {
         const result = await pool.query('SELECT * FROM get_dashboard_stats();');
-        return { statusCode: 200, body: JSON.stringify(result.rows[0] || {}) };
+        return { statusCode: 200, headers, body: JSON.stringify(result.rows[0] || {}) };
       } catch (err) {
-        return { statusCode: 200, body: JSON.stringify({ total_challenges: 0, resolved_challenges: 0 }) };
+        return { 
+          statusCode: 200, 
+          headers, 
+          body: JSON.stringify({ total_challenges: 0, resolved_challenges: 0 }) 
+        };
       }
     }
 
     // ----------------------------------------------------
-    // GET: Full Challenge Feed (With Safety Fallback)
+    // GET: Full Challenge Feed (With Fallback Query)
     // ----------------------------------------------------
-    if (httpMethod === 'GET' && path.endsWith('/challenges')) {
-      let challenges;
+    if (httpMethod === 'GET' && cleanPath.endsWith('/challenges')) {
+      let challenges = [];
       try {
-        // Primary query using custom SQL function
         const result = await pool.query('SELECT * FROM get_challenge_feed();');
         challenges = result.rows;
       } catch (procError) {
-        console.warn('get_challenge_feed() procedure missing. Executing fallback SELECT statement.');
-        // Fallback query directly against tables if get_challenge_feed() procedure is not created
+        console.warn('get_challenge_feed() failed, executing SQL fallback query.');
         const fallbackResult = await pool.query(`
-          SELECT sc.id, sc.title, sc.description, sc.reporter_name, sc.created_at,
+          SELECT sc.id, sc.title, sc.description, sc.reporter_name, sc.status, sc.created_at,
                  COALESCE(c.name, 'General Tech') AS category_name
           FROM societal_challenges sc
           LEFT JOIN categories c ON sc.category_id = c.id
@@ -147,23 +181,23 @@ exports.handler = async (event) => {
         challenges = fallbackResult.rows;
       }
 
-      return { statusCode: 200, body: JSON.stringify(challenges) };
+      return { statusCode: 200, headers, body: JSON.stringify(challenges) };
     }
 
     // ----------------------------------------------------
     // POST: Submit a Challenge (with AI Categorization)
     // ----------------------------------------------------
-    if (httpMethod === 'POST' && path.endsWith('/challenges')) {
+    if (httpMethod === 'POST' && cleanPath.endsWith('/challenges')) {
       const { title, description, category_id, reporter_name, reporter_org_id } = body;
 
       if (!title || !description) {
         return {
           statusCode: 400,
+          headers,
           body: JSON.stringify({ error: "Title and description are required." })
         };
       }
 
-      // Automatically determine category using AI if category_id is missing
       let finalCategoryId = category_id;
       if (!finalCategoryId) {
         finalCategoryId = await categorizeDescription(description);
@@ -177,59 +211,20 @@ exports.handler = async (event) => {
       const values = [title, description, finalCategoryId, reporter_name || 'Anonymous', reporter_org_id || null];
       const result = await pool.query(query, values);
 
-      return { statusCode: 201, body: JSON.stringify(result.rows[0]) };
+      return { statusCode: 201, headers, body: JSON.stringify(result.rows[0]) };
     }
 
-    // ----------------------------------------------------
-    // POST: Assign Challenge to an Industry/Company
-    // ----------------------------------------------------
-    if (httpMethod === 'POST' && path.endsWith('/assign')) {
-      const { challenge_id, assigned_org_id } = body;
-
-      const assignQuery = `
-        INSERT INTO project_assignments (challenge_id, assigned_org_id)
-        VALUES ($1, $2) RETURNING *;
-      `;
-      const result = await pool.query(assignQuery, [challenge_id, assigned_org_id]);
-
-      await pool.query(
-        `UPDATE societal_challenges SET status = 'ASSIGNED' WHERE id = $1;`,
-        [challenge_id]
-      );
-
-      return { statusCode: 201, body: JSON.stringify(result.rows[0]) };
-    }
-
-    // ----------------------------------------------------
-    // POST: Update Industry Project Progress
-    // ----------------------------------------------------
-    if (httpMethod === 'POST' && path.endsWith('/progress')) {
-      const { assignment_id, milestone_title, progress_percentage, remarks } = body;
-
-      const progressQuery = `
-        INSERT INTO project_progress (assignment_id, milestone_title, progress_percentage, remarks)
-        VALUES ($1, $2, $3, $4) RETURNING *;
-      `;
-      const values = [assignment_id, milestone_title, progress_percentage, remarks];
-      const result = await pool.query(progressQuery, values);
-
-      if (progress_percentage === 100) {
-        await pool.query(`
-          UPDATE societal_challenges 
-          SET status = 'RESOLVED' 
-          WHERE id = (SELECT challenge_id FROM project_assignments WHERE id = $1);
-        `, [assignment_id]);
-      }
-
-      return { statusCode: 201, body: JSON.stringify(result.rows[0]) };
-    }
-
-    return { statusCode: 404, body: JSON.stringify({ error: "Route not found" }) };
+    return { 
+      statusCode: 404, 
+      headers, 
+      body: JSON.stringify({ error: `Route not found: ${httpMethod} ${cleanPath}` }) 
+    };
 
   } catch (error) {
     console.error('Database/Server Error:', error);
     return {
       statusCode: 500,
+      headers,
       body: JSON.stringify({ error: "Internal Server Error", details: error.message })
     };
   }
